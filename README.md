@@ -4,7 +4,8 @@
 Created in Azure.
 
 1. Manual: Create a new subscription
-2. Manual: Create the Azure Function in the consumption tier - could be automated
+2. Manual: Create the Azure Function in the consumption tier - could and should be automated
+3. Automatic: Commits to main builds and deploys code to the Azure function
 
 
 In the GitHub actions pipeline, a secret has to be added so we can login to deploy the function:
