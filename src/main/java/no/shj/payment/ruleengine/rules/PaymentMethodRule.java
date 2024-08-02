@@ -1,16 +1,22 @@
 package no.shj.payment.ruleengine.rules;
 
+import com.neovisionaries.i18n.CountryCode;
 import java.util.Map;
 import java.util.Optional;
 import no.shj.payment.ruleengine.context.PaymentRuleContext;
 import no.shj.payment.ruleengine.context.RuleExecutionResult;
+import no.shj.payment.ruleengine.database.RuleConfigurationRepository;
 import no.shj.payment.ruleengine.generic.AbstractRule;
-import no.shj.payment.ruleengine.generic.Rule;
+import no.shj.payment.ruleengine.generic.RuleMetadata;
 
-@Rule(
-    ruleId = "PAYMENT_METHOD_FROM_COUNTRY",
+@RuleMetadata(
+    ruleId = Rule.PAYMENT_METHOD_FROM_COUNTRY,
     ruleDescription = "Selects payment methods based on the country")
-public class PaymentMethodRule extends AbstractRule<String> {
+public class PaymentMethodRule extends AbstractRule<String, Map<CountryCode, String>> {
+  public PaymentMethodRule(
+      RuleConfigurationRepository<Map<CountryCode, String>> configurationRepository) {
+    super(configurationRepository);
+  }
 
   @Override
   protected Map<String, Object> ruleInput(PaymentRuleContext context) {
@@ -18,13 +24,14 @@ public class PaymentMethodRule extends AbstractRule<String> {
   }
 
   @Override
-  protected Optional<String> ruleLogic(PaymentRuleContext context) {
-    String paymentOriginCountry = context.getPaymentOriginCountry();
-    // FIXME - Load from configuration
-    if (paymentOriginCountry.equalsIgnoreCase("norway")) {
-      return Optional.of("Vipps");
+  protected Optional<String> ruleLogic(
+      PaymentRuleContext context, Map<CountryCode, String> config) {
+    CountryCode paymentOriginCountry = context.getPaymentOriginCountry();
+    String paymentMethod =
+        config.get(paymentOriginCountry.getAlpha2()); // Works although IntelliJ complains
+    if (!paymentMethod.isEmpty()) {
+      return Optional.of(paymentMethod);
     }
-
     return Optional.empty();
   }
 

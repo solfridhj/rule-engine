@@ -2,3 +2,11 @@ logging:
   level:
     root: INFO
     no.shj.payment.ruleengine: DEBUG
+
+spring:
+  cloud:
+    azure:
+      cosmos:
+        endpoint: https://rule-configuration-cosmos-db.documents.azure.com:443/
+        key: ${COSMOS_DB_KEY}
+        database: rule-configuration-db

@@ -1,5 +1,6 @@
 package no.shj.payment.ruleengine.rules;
 
+import com.neovisionaries.i18n.CountryCode;
 import no.shj.payment.ruleengine.context.PaymentRuleContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,24 @@ class RuleSetTest {
   @Test
   void integrationTest() {
     PaymentRuleContext context =
-        PaymentRuleContext.PaymentRuleContextBuilder.Builder()
+        PaymentRuleContext.PaymentRuleContextBuilder.builder()
             .customerType("EMPLOYEE")
-            .paymentMethod("MC")
-            .paymentOriginCountry("NORWAY")
+            .paymentMethod("MASTERCARD")
+            .paymentOriginCountry(CountryCode.valueOf("NO"))
+            .transactionAmount("fixme")
+            .paymentCurrency("SEK")
             .build();
 
     ruleSet.evaluateRules(context);
+
+    PaymentRuleContext context2 =
+        PaymentRuleContext.PaymentRuleContextBuilder.builder()
+            .customerType("EMPLOYEE")
+            .paymentMethod("VISA")
+            .paymentOriginCountry(CountryCode.valueOf("NO"))
+            .transactionAmount("fixme")
+            .paymentCurrency("SEK")
+            .build();
+    ruleSet.evaluateRules(context2);
   }
 }

@@ -1,14 +1,17 @@
 package no.shj.payment.ruleengine.context;
 
+import com.neovisionaries.i18n.CountryCode;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentRuleContext {
 
   private String customerType;
+  // fixme: use money
   private String transactionAmount;
   private String paymentMethod;
-  private String paymentOriginCountry;
+  private CountryCode paymentOriginCountry;
+  private String paymentCurrency;
 
   // Output
   private final List<RuleExecutionInformation> ruleExecutionInformationList = new ArrayList<>();
@@ -26,8 +29,12 @@ public class PaymentRuleContext {
     return paymentMethod;
   }
 
-  public String getPaymentOriginCountry() {
+  public CountryCode getPaymentOriginCountry() {
     return paymentOriginCountry;
+  }
+
+  public String getPaymentCurrency() {
+    return paymentCurrency;
   }
 
   public List<RuleExecutionInformation> getRuleExecutionInformationList() {
@@ -42,31 +49,37 @@ public class PaymentRuleContext {
     private String customerType;
     private String transactionAmount;
     private String paymentMethod;
-    private String paymentOriginCountry;
+    private CountryCode paymentOriginCountry;
+    private String paymentCurrency;
 
     private PaymentRuleContextBuilder() {}
 
-    public static PaymentRuleContextBuilder Builder() {
+    public static PaymentRuleContextBuilder builder() {
       return new PaymentRuleContextBuilder();
     }
 
     public PaymentRuleContextBuilder customerType(String customerType) {
-      this.customerType = customerType;
+      this.customerType = customerType.toUpperCase();
       return this;
     }
 
     public PaymentRuleContextBuilder transactionAmount(String transactionAmount) {
-      this.transactionAmount = transactionAmount;
+      this.transactionAmount = transactionAmount.toUpperCase();
       return this;
     }
 
     public PaymentRuleContextBuilder paymentMethod(String paymentMethod) {
-      this.paymentMethod = paymentMethod;
+      this.paymentMethod = paymentMethod.toUpperCase();
       return this;
     }
 
-    public PaymentRuleContextBuilder paymentOriginCountry(String paymentOriginCountry) {
+    public PaymentRuleContextBuilder paymentOriginCountry(CountryCode paymentOriginCountry) {
       this.paymentOriginCountry = paymentOriginCountry;
+      return this;
+    }
+
+    public PaymentRuleContextBuilder paymentCurrency(String paymentCurrency) {
+      this.paymentCurrency = paymentCurrency.toUpperCase();
       return this;
     }
 
@@ -76,6 +89,7 @@ public class PaymentRuleContext {
       paymentRuleContext.paymentMethod = this.paymentMethod;
       paymentRuleContext.paymentOriginCountry = this.paymentOriginCountry;
       paymentRuleContext.transactionAmount = this.transactionAmount;
+      paymentRuleContext.paymentCurrency = this.paymentCurrency;
       return paymentRuleContext;
     }
   }

@@ -2,19 +2,20 @@ package no.shj.payment.ruleengine.context;
 
 import java.util.HashMap;
 import java.util.Map;
+import no.shj.payment.ruleengine.rules.Rule;
 
 public class RuleExecutionInformation {
 
-  String ruleId;
+  Rule ruleId;
   String ruleDescription;
   Map<String, Object> ruleInput = new HashMap<>();
   boolean wasTriggered = false;
 
-  public String getRuleId() {
+  public Rule getRuleId() {
     return ruleId;
   }
 
-  public RuleExecutionInformation setRuleId(String ruleId) {
+  public RuleExecutionInformation setRuleId(Rule ruleId) {
     this.ruleId = ruleId;
     return this;
   }

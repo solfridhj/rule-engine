@@ -2,6 +2,7 @@ package no.shj.payment.ruleengine.function.mapper;
 
 import static java.util.Optional.ofNullable;
 
+import com.neovisionaries.i18n.CountryCode;
 import jakarta.validation.Valid;
 import javax.money.CurrencyUnit;
 import no.shj.payment.ruleengine.context.PaymentRuleContext;
@@ -18,11 +19,12 @@ import org.springframework.validation.annotation.Validated;
 public class ContextDtoMapper {
 
   public @Valid PaymentRuleContext map(@Valid RuleEngineRequestDto requestDto) {
-    return PaymentRuleContext.PaymentRuleContextBuilder.Builder()
+    return PaymentRuleContext.PaymentRuleContextBuilder.builder()
         .transactionAmount(requestDto.getTransactionAmount())
-        .paymentOriginCountry(requestDto.getPaymentOriginCountry())
+        .paymentOriginCountry(CountryCode.valueOf(requestDto.getPaymentOriginCountry()))
         .customerType(requestDto.getCustomerType())
         .paymentMethod(requestDto.getPaymentMethod())
+        .paymentCurrency(requestDto.getPaymentCurrency())
         .build();
   }
 
@@ -49,7 +51,7 @@ public class ContextDtoMapper {
 
   private ExecutionInformationDto map(RuleExecutionInformation information) {
     return ExecutionInformationDto.ExecutionInformationBuilder.builder()
-        .ruleId(information.getRuleId())
+        .ruleId(String.valueOf(information.getRuleId()))
         .ruleDescription(information.getRuleDescription())
         .wasTriggered(information.wasTriggered())
         .ruleInput(information.getRuleInput())

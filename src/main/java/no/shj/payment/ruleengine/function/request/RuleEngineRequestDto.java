@@ -9,6 +9,7 @@ public class RuleEngineRequestDto {
   private @NotNull String transactionAmount;
   private @NotNull String paymentMethod;
   private @NotNull String paymentOriginCountry;
+  private @NotNull String paymentCurrency;
 
   public String getCustomerType() {
     return customerType;
@@ -43,6 +44,15 @@ public class RuleEngineRequestDto {
 
   public RuleEngineRequestDto setPaymentOriginCountry(String paymentOriginCountry) {
     this.paymentOriginCountry = paymentOriginCountry;
+    return this;
+  }
+
+  public @NotNull String getPaymentCurrency() {
+    return paymentCurrency;
+  }
+
+  public RuleEngineRequestDto setPaymentCurrency(@NotNull String paymentCurrency) {
+    this.paymentCurrency = paymentCurrency;
     return this;
   }
 }

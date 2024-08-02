@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Retention(RetentionPolicy.RUNTIME) // The annotation will be available at runtime
 @Target(ElementType.TYPE)
 @Component
-public @interface Rule {
+public @interface RuleMetadata {
 
-  String ruleId();
+  no.shj.payment.ruleengine.rules.Rule ruleId();
 
   String ruleDescription();
 }

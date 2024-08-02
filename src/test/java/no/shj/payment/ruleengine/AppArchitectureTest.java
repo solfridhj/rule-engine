@@ -5,7 +5,7 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import no.shj.payment.ruleengine.generic.AbstractRule;
-import no.shj.payment.ruleengine.generic.Rule;
+import no.shj.payment.ruleengine.generic.RuleMetadata;
 import org.junit.jupiter.api.Test;
 
 class AppArchitectureTest {
@@ -19,7 +19,7 @@ class AppArchitectureTest {
             .that()
             .areAssignableTo(AbstractRule.class)
             .should()
-            .beAnnotatedWith(Rule.class)
+            .beAnnotatedWith(RuleMetadata.class)
             .orShould()
             .haveSimpleName("AbstractRule"); // The abstract rule itself is the only exception.
 

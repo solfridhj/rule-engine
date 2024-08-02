@@ -7,13 +7,16 @@ import org.springframework.stereotype.Component;
 public class RuleSet {
 
   private final PaymentMethodRule paymentMethodRule;
+  private final AcquirerRoutingRule acquirerRoutingRule;
 
-  public RuleSet(PaymentMethodRule paymentMethodRule) {
+  public RuleSet(PaymentMethodRule paymentMethodRule, AcquirerRoutingRule acquirerRoutingRule) {
     this.paymentMethodRule = paymentMethodRule;
+    this.acquirerRoutingRule = acquirerRoutingRule;
   }
 
   public void evaluateRules(PaymentRuleContext context) {
     paymentMethodRule.executeRule(context);
+    acquirerRoutingRule.executeRule(context);
     // Add new rules here
   }
 }
