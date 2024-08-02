@@ -1,4 +1,40 @@
-# Payment rules API
+# Payment rules Azure Function application
+
+## Application/System Architecture
+The rules-engine consists of a Spring Boot application, deployed as an Azure Function app using `spring-cloud-function-adapter-azure`. 
+
+```mermaid
+  graph TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+```
+
+
+## Local development
+
+Need Azure Functions Core Tools to run and test the function locally. Local running will use the `local.settings.json` file.
+https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=macos%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-java
+On macOS:
+
+`
+brew tap azure/functions
+`
+
+`
+brew install azure-functions-core-tools@4
+`
+
+`
+mvn package
+`
+
+`
+mvn azure-functions:run
+`
+
+Will run the function on your localhost on port 7071.
 
 ## Infrastructure
 Created in Azure.
@@ -16,14 +52,3 @@ the AZURE_CREDENTIALS secret to allow auth for deployment. The secret is obtaine
 az ad sp create-for-rbac --name "myApp" --role contributor \
 --scopes /subscriptions/{{subId}}/resourceGroups/test-group-dev  \
 --json-auth
-
-## Local development
-
-Need Azure Functions Core Tools to run and test the function locally. Local running will use the local.settings.json file.
-https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=macos%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-java
-On macOS:
-brew tap azure/functions
-brew install azure-functions-core-tools@4
-
-mvn package
-mvn azure-functions:run
