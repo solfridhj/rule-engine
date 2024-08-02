@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.3.2</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>no.shj.payment</groupId>
+	<artifactId>ruleengine</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>rule-engine</name>
+	<description>Payment rule engine</description>
+	<properties>
+		<java.version>21</java.version>
+
+		<spring-boot-thin-layout.version>1.0.28.RELEASE</spring-boot-thin-layout.version>
+
+		<!-- Spring Boot start class -->
+		<start-class>no.shj.payment.ruleengine.RuleEngineApplication</start-class>
+
+		<!-- AZURE FUNCTION CONFIG -->
+		<functionAppName>payment-engine-dev</functionAppName>
+		<functionAppRegion>norwayeast</functionAppRegion>
+		<functionResourceGroup>test-group-dev</functionResourceGroup>
+		<functionAppServicePlanName>ASP-testgroupdev-92cf</functionAppServicePlanName>
+		<functionPricingTier>EP1</functionPricingTier>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-function-adapter-azure</artifactId>
+			<version>4.1.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>2.43.0</version>
+				<configuration>
+					<java>
+						<includes>
+							<include>src/main/java/**/*.java</include> <!-- Check application code -->
+							<include>src/test/java/**/*.java</include> <!-- Check application tests code -->
+						</includes>
+						<googleJavaFormat>
+							<version>1.22.0</version>
+							<style>GOOGLE</style>
+						</googleJavaFormat>
+					</java>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.microsoft.azure</groupId>
+				<artifactId>azure-functions-maven-plugin</artifactId>
+				<version>1.36.0</version>
+
+				<configuration>
+					<appName>${functionAppName}</appName>
+					<resourceGroup>${functionResourceGroup}</resourceGroup>
+					<region>${functionAppRegion}</region>
+					<appServicePlanName>${functionAppServicePlanName}</appServicePlanName>
+					<pricingTier>${functionPricingTier}</pricingTier>
+
+					<hostJson>${project.basedir}/src/main/resources/host.json</hostJson>
+
+					<runtime>
+						<os>linux</os>
+						<javaVersion>21</javaVersion>
+					</runtime>
+
+					<appSettings>
+						<property>
+							<name>FUNCTIONS_EXTENSION_VERSION</name>
+							<value>~4</value>
+						</property>
+					</appSettings>
+				</configuration>
+				<executions>
+					<execution>
+						<id>package-functions</id>
+						<goals>
+							<goal>package</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework.boot.experimental</groupId>
+						<artifactId>spring-boot-thin-layout</artifactId>
+						<version>${spring-boot-thin-layout.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
