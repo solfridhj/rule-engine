@@ -27,7 +27,7 @@ public class EngineRuleHandler {
         if (request.getBody().isEmpty()) {
             return request
                     .createResponseBuilder(HttpStatus.OK)
-                    .body(executionFunction.apply("No input"))
+                    .body(executionFunction.apply("Hei verden!! "))
                     .header("Content-Type", "application/json")
                     .build();
         }
