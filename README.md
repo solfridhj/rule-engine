@@ -4,8 +4,17 @@
 Created in Azure.
 
 1. Manual: Create a new subscription
-2. Manual: Create a new resource group
+2. Manual: Create the Azure Function in the consumption tier - could be automated
 
+
+In the GitHub actions pipeline, a secret has to be added so we can login to deploy the function:
+https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-cli%2Clinux
+
+The pipeline is using the "Use the Azure login action with a service principal secret" approach, and setting
+the AZURE_CREDENTIALS secret to allow auth for deployment. The secret is obtained from:
+az ad sp create-for-rbac --name "myApp" --role contributor \
+--scopes /subscriptions/{{subId}}/resourceGroups/test-group-dev  \
+--json-auth
 
 ## Local development
 
