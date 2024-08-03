@@ -23,7 +23,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
 
 // All infra needed due to the function app
 module functionApp './modules/functionapp.bicep' = {
-  name: 'functionAppResources'
+  name: uniqueString('functionAppResources')
   scope: resourceGroup
   params: {
     location: location
