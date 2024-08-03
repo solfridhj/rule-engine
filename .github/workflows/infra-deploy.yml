@@ -28,7 +28,6 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az deployment group create \
-            --resource-group ${{ env.RESOURCE_GROUP_NAME }}
+            az deployment sub create \
+            --location 'norwayeast'
             --template-file ./deploy/main.bicep
-            --parameters @.deploy/parameters.json

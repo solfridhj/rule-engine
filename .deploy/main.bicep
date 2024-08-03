@@ -1,8 +1,8 @@
 targetScope = 'subscription'
 
-param location string
-param env string
-param owner string
+param location string = 'norwayeast'
+param env string = 'preprod'
+param owner string = 'solfrid.hagen.johansen@outlook.com'
 
 var resourceGroupName  = 'payment-engine-rg-${env}'
 
