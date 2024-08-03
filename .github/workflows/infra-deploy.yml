@@ -34,4 +34,4 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az deployment sub create --location 'norwayeast' --template-file ./deploy/main.bicep
+            az deployment sub create --location 'norwayeast' --template-file ./.deploy/main.bicep
