@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractRule<T, S> {
 
-  // TODO - see if this can be the specific object structure deserialization.
   private final RuleConfigurationDaoImpl<S> ruleConfigurationDao;
 
   protected AbstractRule(RuleConfigurationDaoImpl<S> ruleConfigurationDao) {
@@ -45,6 +44,7 @@ public abstract class AbstractRule<T, S> {
     log.info(String.format("Executing rule with id %s", ruleId));
 
     var ruleInputData = ruleInput(context);
+
     log.debug(String.format("Rule id %s input: %s", ruleId, ruleInputData));
 
     log.debug(

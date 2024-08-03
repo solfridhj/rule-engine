@@ -25,6 +25,7 @@ public class ContextDtoMapper {
         .customerType(requestDto.getCustomerType())
         .paymentMethod(requestDto.getPaymentMethod())
         .paymentCurrency(requestDto.getPaymentCurrency())
+        .cardType(requestDto.getCardType())
         .build();
   }
 
@@ -44,7 +45,7 @@ public class ContextDtoMapper {
         .manualVerificationRequired(executionResult.getManualVerificationRequired())
         .shouldWaive3ds(executionResult.getShouldWaive3ds())
         .paymentMethod(executionResult.getPaymentMethod())
-        .executionInformationDtoList(
+        .executionInformationList(
             context.getRuleExecutionInformationList().stream().map(this::map).toList())
         .build();
   }

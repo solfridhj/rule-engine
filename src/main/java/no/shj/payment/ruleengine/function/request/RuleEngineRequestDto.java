@@ -1,15 +1,17 @@
 package no.shj.payment.ruleengine.function.request;
 
 import jakarta.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 // TODO - check if I can have request with builder of if I have to have setter.
 public class RuleEngineRequestDto {
 
   private @NotNull String customerType;
-  private @NotNull String transactionAmount;
+  private @NotNull BigDecimal transactionAmount;
   private @NotNull String paymentMethod;
   private @NotNull String paymentOriginCountry;
   private @NotNull String paymentCurrency;
+  private @NotNull String cardType;
 
   public String getCustomerType() {
     return customerType;
@@ -20,11 +22,11 @@ public class RuleEngineRequestDto {
     return this;
   }
 
-  public String getTransactionAmount() {
+  public BigDecimal getTransactionAmount() {
     return transactionAmount;
   }
 
-  public RuleEngineRequestDto setTransactionAmount(String transactionAmount) {
+  public RuleEngineRequestDto setTransactionAmount(BigDecimal transactionAmount) {
     this.transactionAmount = transactionAmount;
     return this;
   }
@@ -53,6 +55,15 @@ public class RuleEngineRequestDto {
 
   public RuleEngineRequestDto setPaymentCurrency(@NotNull String paymentCurrency) {
     this.paymentCurrency = paymentCurrency;
+    return this;
+  }
+
+  public @NotNull String getCardType() {
+    return cardType;
+  }
+
+  public RuleEngineRequestDto setCardType(@NotNull String cardType) {
+    this.cardType = cardType;
     return this;
   }
 }

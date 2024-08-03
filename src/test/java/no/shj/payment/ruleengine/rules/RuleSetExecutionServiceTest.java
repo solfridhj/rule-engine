@@ -1,13 +1,16 @@
 package no.shj.payment.ruleengine.rules;
 
 import com.neovisionaries.i18n.CountryCode;
+import java.math.BigDecimal;
 import no.shj.payment.ruleengine.service.RuleSetExecutionService;
 import no.shj.payment.ruleengine.service.context.PaymentRuleContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("dev")
 class RuleSetExecutionServiceTest {
 
   @Autowired private RuleSetExecutionService ruleSetExecutionService;
@@ -19,8 +22,9 @@ class RuleSetExecutionServiceTest {
             .customerType("EMPLOYEE")
             .paymentMethod("MASTERCARD")
             .paymentOriginCountry(CountryCode.valueOf("NO"))
-            .transactionAmount("fixme")
+            .transactionAmount(BigDecimal.TEN)
             .paymentCurrency("SEK")
+            .cardType("DEBIT")
             .build();
 
     ruleSetExecutionService.evaluateRules(context);
@@ -30,8 +34,9 @@ class RuleSetExecutionServiceTest {
             .customerType("EMPLOYEE")
             .paymentMethod("VISA")
             .paymentOriginCountry(CountryCode.valueOf("NO"))
-            .transactionAmount("fixme")
+            .transactionAmount(BigDecimal.TEN)
             .paymentCurrency("SEK")
+            .cardType("CREDIT")
             .build();
     ruleSetExecutionService.evaluateRules(context2);
 
@@ -40,8 +45,9 @@ class RuleSetExecutionServiceTest {
             .customerType("EMPLOYEE")
             .paymentMethod("VISA")
             .paymentOriginCountry(CountryCode.valueOf("NO"))
-            .transactionAmount("fixme")
+            .transactionAmount(BigDecimal.valueOf(3000))
             .paymentCurrency("EUR")
+            .cardType("CREDIT")
             .build();
     ruleSetExecutionService.evaluateRules(context3);
   }

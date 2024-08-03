@@ -1,17 +1,18 @@
 package no.shj.payment.ruleengine.service.context;
 
 import com.neovisionaries.i18n.CountryCode;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentRuleContext {
 
   private String customerType;
-  // fixme: use money
-  private String transactionAmount;
+  private BigDecimal transactionAmount;
   private String paymentMethod;
   private CountryCode paymentOriginCountry;
   private String paymentCurrency;
+  private String cardType;
 
   // Output
   private final List<RuleExecutionInformation> ruleExecutionInformationList = new ArrayList<>();
@@ -21,7 +22,7 @@ public class PaymentRuleContext {
     return customerType;
   }
 
-  public String getTransactionAmount() {
+  public BigDecimal getTransactionAmount() {
     return transactionAmount;
   }
 
@@ -37,6 +38,10 @@ public class PaymentRuleContext {
     return paymentCurrency;
   }
 
+  public String getCardType() {
+    return cardType;
+  }
+
   public List<RuleExecutionInformation> getRuleExecutionInformationList() {
     return ruleExecutionInformationList;
   }
@@ -47,10 +52,11 @@ public class PaymentRuleContext {
 
   public static final class PaymentRuleContextBuilder {
     private String customerType;
-    private String transactionAmount;
+    private BigDecimal transactionAmount;
     private String paymentMethod;
     private CountryCode paymentOriginCountry;
     private String paymentCurrency;
+    private String cardType;
 
     private PaymentRuleContextBuilder() {}
 
@@ -63,8 +69,8 @@ public class PaymentRuleContext {
       return this;
     }
 
-    public PaymentRuleContextBuilder transactionAmount(String transactionAmount) {
-      this.transactionAmount = transactionAmount.toUpperCase();
+    public PaymentRuleContextBuilder transactionAmount(BigDecimal transactionAmount) {
+      this.transactionAmount = transactionAmount;
       return this;
     }
 
@@ -83,6 +89,11 @@ public class PaymentRuleContext {
       return this;
     }
 
+    public PaymentRuleContextBuilder cardType(String cardType) {
+      this.cardType = cardType.toUpperCase();
+      return this;
+    }
+
     public PaymentRuleContext build() {
       PaymentRuleContext paymentRuleContext = new PaymentRuleContext();
       paymentRuleContext.customerType = this.customerType;
@@ -90,6 +101,7 @@ public class PaymentRuleContext {
       paymentRuleContext.paymentOriginCountry = this.paymentOriginCountry;
       paymentRuleContext.transactionAmount = this.transactionAmount;
       paymentRuleContext.paymentCurrency = this.paymentCurrency;
+      paymentRuleContext.cardType = this.cardType;
       return paymentRuleContext;
     }
   }

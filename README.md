@@ -28,8 +28,9 @@ ease of configuration, scalability, and pricing model paying for usage only.
 
 ## Local development
 
-Need Azure Functions Core Tools to run and test the function locally. Local running will use the `local.settings.json` file.
-https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=macos%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-java
+Need Azure Functions Core Tools to run and test the function locally.
+Local running will use the `local.settings.json` file. More info [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=macos%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-java).
+Note: To test towards the Cosmos DB locally, the Key of the DB has to be obtained and set in the `application.yaml` file (replaced with "notUsedSetInGithubSecrets").
 On macOS:
 
 `
@@ -55,10 +56,13 @@ Created in Azure.
 
 1. Manual: Create a new subscription.
 2. Manual: Create the Azure Function in the consumption tier - could and should be automated.
-3. Create the Azure Cosmos DB in the free tier - could and should be automated.
-4. Configure network access so the function can access the cosmos DB.
+3. Manual: Create the Azure Cosmos DB in the free tier - could and should be automated.
+4. Manual: Configure network access so the function can access the cosmos DB. 
+Note: Due to the afunc being in the consumption plan, the entire datacenters outbound range has to be whitelisted (see more on this [here](https://learn.microsoft.com/en-gb/azure/azure-functions/ip-addresses?tabs=portal#find-outbound-ip-addresses))
 5. Automatic: Commits to main builds and deploys code to the Azure function.
 
+
+### Manual steps in GitHub actions:
 
 In the GitHub actions pipeline, a secret has to be added so we can login to deploy the function:
 https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-cli%2Clinux
@@ -69,4 +73,5 @@ az ad sp create-for-rbac --name "myApp" --role contributor \
 --scopes /subscriptions/{{subId}}/resourceGroups/test-group-dev  \
 --json-auth
 
-The cosmos DB key also has to be manually configured (note, there are better options than key).
+The cosmos DB key also has to be manually configured (note, there are better options than key), 
+so it's set as as a secret, COSMOS_DB_KEY, which is just one of the keys to access the DB. 

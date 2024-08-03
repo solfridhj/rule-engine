@@ -2,7 +2,6 @@ package no.shj.payment.ruleengine.service.rules;
 
 import static no.shj.payment.ruleengine.service.rules.Rule.ACQUIRER_ROUTING;
 
-import java.math.BigDecimal;
 import java.util.*;
 import no.shj.payment.ruleengine.database.RuleConfigurationDaoImpl;
 import no.shj.payment.ruleengine.service.context.PaymentRuleContext;
@@ -37,22 +36,6 @@ public class AcquirerRoutingRule
   protected Optional<String> ruleLogic(
       PaymentRuleContext context, Map<String, Map<String, Map<String, String>>> config) {
 
-    // Pretend these are configurable from somewhere fetched from e.g a database.
-    // Assuming configuration is correct and all probabilities add up. Should verify when app loads
-    // config.
-    Map<String, Map<String, Map<String, BigDecimal>>> ruleConfiguration =
-        new HashMap<>(
-            Map.of(
-                "SEK",
-                Map.of(
-                    "MASTERCARD",
-                    Map.of(
-                        "Acquirer A",
-                        BigDecimal.valueOf(20.00),
-                        "Acquirer B",
-                        BigDecimal.valueOf(50.00),
-                        "Acquirer C",
-                        BigDecimal.valueOf(30.00)))));
     var paymentMethod = context.getPaymentMethod();
     var paymentCurrency = context.getPaymentCurrency();
     var mapForCurrency = config.get(paymentCurrency);
@@ -74,7 +57,6 @@ public class AcquirerRoutingRule
     result.setAcquirerId(output);
   }
 
-  // TODO - have to test this a bit as I haven't used it before
   private static <T> T getRandomValue(Map<T, String> map) {
     EnumeratedDistribution<T> distribution = new EnumeratedDistribution<>(convertToPairList(map));
     return distribution.sample();

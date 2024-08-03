@@ -11,7 +11,7 @@ public class RuleEngineResponseDto {
   Boolean manualVerificationRequired;
   BigDecimal calculatedFee;
   String calculatedFeeCurrency;
-  List<ExecutionInformationDto> executionInformationDtoList;
+  List<ExecutionInformationDto> executionInformationList;
 
   public static final class RuleEngineResponseDtoBuilder {
     private String paymentMethod;
@@ -20,7 +20,7 @@ public class RuleEngineResponseDto {
     private Boolean manualVerificationRequired;
     private BigDecimal calculatedFee;
     private String calculatedFeeCurrency;
-    private List<ExecutionInformationDto> executionInformationDtoList;
+    private List<ExecutionInformationDto> executionInformationList;
 
     private RuleEngineResponseDtoBuilder() {}
 
@@ -59,15 +59,15 @@ public class RuleEngineResponseDto {
       return this;
     }
 
-    public RuleEngineResponseDtoBuilder executionInformationDtoList(
-        List<ExecutionInformationDto> executionInformationDtoList) {
-      this.executionInformationDtoList = executionInformationDtoList;
+    public RuleEngineResponseDtoBuilder executionInformationList(
+        List<ExecutionInformationDto> executionInformationList) {
+      this.executionInformationList = executionInformationList;
       return this;
     }
 
     public RuleEngineResponseDto build() {
       RuleEngineResponseDto ruleEngineResponseDto = new RuleEngineResponseDto();
-      ruleEngineResponseDto.executionInformationDtoList = this.executionInformationDtoList;
+      ruleEngineResponseDto.executionInformationList = this.executionInformationList;
       ruleEngineResponseDto.shouldWaive3ds = this.shouldWaive3ds;
       ruleEngineResponseDto.paymentMethod = this.paymentMethod;
       ruleEngineResponseDto.calculatedFee = this.calculatedFee;

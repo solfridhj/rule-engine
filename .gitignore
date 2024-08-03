@@ -1,3 +1,6 @@
+# ignore application-dev as it contains key for testing locally
+**application-dev.yaml
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar

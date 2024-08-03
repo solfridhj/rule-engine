@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 import no.shj.payment.ruleengine.service.rules.Rule;
 import org.springframework.stereotype.Component;
 
-@Retention(RetentionPolicy.RUNTIME) // The annotation will be available at runtime
+@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Component
 public @interface RuleMetadata {

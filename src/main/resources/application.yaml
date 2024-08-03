@@ -1,3 +1,9 @@
+# Rule Engine Application Settings
+rules:
+  infrastructure:
+    cache:
+      evictiontimeinseconds: 60
+
 logging:
   level:
     root: INFO
@@ -8,5 +14,6 @@ spring:
     azure:
       cosmos:
         endpoint: https://rule-configuration-cosmos-db.documents.azure.com:443/
-        key: ${COSMOS_DB_KEY} # will be set in the deploy pipeline from github secrets
         database: rule-configuration-db
+        # Key will be set by deploy pipeline from GitHub Secrets
+        key: notUsedSetInGithubSecrets
