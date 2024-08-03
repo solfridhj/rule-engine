@@ -68,9 +68,11 @@ https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs
 
 The pipeline is using the "Use the Azure login action with a service principal secret" approach, and setting
 the AZURE_CREDENTIALS secret to allow auth for deployment. The secret is obtained from:
-az ad sp create-for-rbac --name "myApp" --role contributor \
+az ad sp create-for-rbac --name "githubActionApp" --role contributor \
 --scopes /subscriptions/{{subId}}/resourceGroups/test-group-dev  \
 --json-auth
+
+The service principal needs to have role "Contributor" on the subscription level. 
 
 The cosmos DB key also has to be manually configured (note, there are better options than key), 
 so it's set as as a secret, COSMOS_DB_KEY, which is just one of the keys to access the DB. 

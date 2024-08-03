@@ -5,7 +5,7 @@ var env = commonTags.env
 
 var appServicePlanName = 'payment-rules-appserviceplan-${env}'
 var functionAppName = 'payment-rules-fapp-${env}'
-var storageAccountName  = 'payment-rules-sa-${env}'
+var storageAccountName  = 'paymentrulessa${env}'
 
 
 resource storageAcct 'Microsoft.Storage/storageAccounts@2022-09-01' = {
