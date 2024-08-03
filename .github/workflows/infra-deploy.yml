@@ -1,6 +1,12 @@
 name: Deploy infra - trigger when needed.
 
 on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        type: string
+        required: false
   push:
     branches:
       - main

@@ -21,7 +21,6 @@ resource storageAcct 'Microsoft.Storage/storageAccounts@2022-09-01' = {
     defaultToOAuthAuthentication: true
   }
   tags: commonTags
-
 }
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
