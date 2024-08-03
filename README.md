@@ -59,7 +59,7 @@ Created in Azure.
 3. Manual: Create the Azure Cosmos DB in the free tier - could and should be automated.
 4. Manual: Configure network access so the function can access the cosmos DB. 
 Note: Due to the afunc being in the consumption plan, the entire datacenters outbound range has to be whitelisted (see more on this [here](https://learn.microsoft.com/en-gb/azure/azure-functions/ip-addresses?tabs=portal#find-outbound-ip-addresses))
-5. Automatic: Commits to main builds and deploys code to the Azure function.
+5. Automatic: Commits to main builds and deploys code to the Azure function (takes around 2 mins).
 
 
 ### Manual steps in GitHub actions:

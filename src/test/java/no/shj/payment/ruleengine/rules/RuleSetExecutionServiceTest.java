@@ -4,13 +4,13 @@ import com.neovisionaries.i18n.CountryCode;
 import java.math.BigDecimal;
 import no.shj.payment.ruleengine.service.RuleSetExecutionService;
 import no.shj.payment.ruleengine.service.context.PaymentRuleContext;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-@ActiveProfiles("dev")
 class RuleSetExecutionServiceTest {
 
   @Autowired private RuleSetExecutionService ruleSetExecutionService;
