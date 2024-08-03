@@ -58,6 +58,7 @@ resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
     httpsOnly: true
 
     siteConfig: {
+      linuxFxVersion: 'java|21'
       numberOfWorkers: 1
       functionAppScaleLimit: 5
       appSettings: [
