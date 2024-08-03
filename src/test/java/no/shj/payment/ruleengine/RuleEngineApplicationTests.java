@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class RuleEngineApplicationTests {
 
+  /*
   @Test
   @Disabled
-  void contextLoads() {}
+  void contextLoads() {}*/
 }

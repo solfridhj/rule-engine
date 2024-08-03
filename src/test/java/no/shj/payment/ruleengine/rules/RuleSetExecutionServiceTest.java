@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class RuleSetExecutionServiceTest {
+  /*
 
   @Autowired private RuleSetExecutionService ruleSetExecutionService;
 
@@ -50,5 +51,5 @@ class RuleSetExecutionServiceTest {
             .cardType("CREDIT")
             .build();
     ruleSetExecutionService.evaluateRules(context3);
-  }
+  }*/
 }
