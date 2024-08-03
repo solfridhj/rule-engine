@@ -67,6 +67,7 @@
 			<artifactId>nv-i18n</artifactId>
 			<version>1.29</version>
 		</dependency>
+		<!-- Used in testing-->
 		<dependency>
 			<groupId>com.tngtech.archunit</groupId>
 			<artifactId>archunit-junit5</artifactId>

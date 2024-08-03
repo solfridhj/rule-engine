@@ -48,8 +48,7 @@ mvn package
 `
 mvn azure-functions:run
 `
-
-Will run the function on your localhost on port 7071.
+ Will run the function on your localhost on port 7071.
 
 ## Infrastructure
 Created in Azure.

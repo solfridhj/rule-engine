@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schema.management.azure.com/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "env": {
+      "value": "preprod"
+    },
+    "location": {
+      "value": "norwayeast"
+    },
+    "owner": {
+      "value": "solfrid.hagen.johansen@outlook.com"
+    },
+    "kind": {
+      "value": "StorageV2"
+    }
+  }
+}
