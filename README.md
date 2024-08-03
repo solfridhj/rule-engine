@@ -54,7 +54,7 @@ mvn azure-functions:run
 Created in Azure.
 
 1. Manual: Create a new subscription.
-2. Manual: Create the Azure Function in the consumption tier - could and should be automated.
+2. Automated: Create the Azure Function in the consumption tier
 3. Manual: Create the Azure Cosmos DB in the free tier - could and should be automated.
 4. Manual: Configure network access so the function can access the cosmos DB. 
 Note: Due to the afunc being in the consumption plan, the entire datacenters outbound range has to be whitelisted (see more on this [here](https://learn.microsoft.com/en-gb/azure/azure-functions/ip-addresses?tabs=portal#find-outbound-ip-addresses))

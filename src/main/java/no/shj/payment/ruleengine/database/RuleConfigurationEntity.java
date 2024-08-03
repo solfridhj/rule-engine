@@ -5,10 +5,11 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import no.shj.payment.ruleengine.service.rules.Rule;
+import no.shj.payment.ruleengine.ruleservice.rules.Rule;
 import org.springframework.data.annotation.Id;
 
-// TODO - keep it hexagonal, should map this to domain-objects to separate from the port.
+// TODO - keep it separate from domain layer, should map this to domain-objects to separate from the
+// port.
 @Document(collection = "rule-configuration-container")
 public class RuleConfigurationEntity<T> {
 

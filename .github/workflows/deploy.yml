@@ -1,15 +1,18 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Java project to Azure Function App - payment-engine-dev
+name: Build and deploy to Azure Function App
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       environment:
         description: 'Environment to run tests against'
-        type: environment
-        required: true
+        type: string
+        required: false
 
 
 env:

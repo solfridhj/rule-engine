@@ -2,7 +2,7 @@ package no.shj.payment.ruleengine.database;
 
 import java.util.Optional;
 import no.shj.payment.ruleengine.database.implementation.RuleConfigurationRepository;
-import no.shj.payment.ruleengine.service.rules.Rule;
+import no.shj.payment.ruleengine.ruleservice.rules.Rule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;

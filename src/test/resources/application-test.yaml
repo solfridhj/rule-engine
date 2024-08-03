@@ -2,4 +2,4 @@ spring:
   cloud:
     azure:
       cosmos:
-        key: mockKeyForTests
+        enabled: false

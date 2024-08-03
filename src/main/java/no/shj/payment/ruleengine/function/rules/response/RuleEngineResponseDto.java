@@ -1,4 +1,4 @@
-package no.shj.payment.ruleengine.function.response;
+package no.shj.payment.ruleengine.function.rules.response;
 
 import java.math.BigDecimal;
 import java.util.List;

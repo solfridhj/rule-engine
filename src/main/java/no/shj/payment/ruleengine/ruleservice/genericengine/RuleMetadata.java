@@ -1,10 +1,10 @@
-package no.shj.payment.ruleengine.service.genericengine;
+package no.shj.payment.ruleengine.ruleservice.genericengine;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import no.shj.payment.ruleengine.service.rules.Rule;
+import no.shj.payment.ruleengine.ruleservice.rules.Rule;
 import org.springframework.stereotype.Component;
 
 @Retention(RetentionPolicy.RUNTIME)

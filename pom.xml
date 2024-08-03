@@ -61,6 +61,11 @@
 			<artifactId>commons-math3</artifactId>
 			<version>3.6.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.10.2</version>
+		</dependency>
 		<!-- Gives an Enum of all country-codes in ISO-standard -->
 		<dependency>
 			<groupId>com.neovisionaries</groupId>

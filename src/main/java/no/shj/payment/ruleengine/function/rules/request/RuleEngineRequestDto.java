@@ -1,4 +1,4 @@
-package no.shj.payment.ruleengine.function.request;
+package no.shj.payment.ruleengine.function.rules.request;
 
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package no.shj.payment.ruleengine.service.context;
+package no.shj.payment.ruleengine.ruleservice.context;
 
 import org.javamoney.moneta.Money;
 

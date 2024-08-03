@@ -1,4 +1,4 @@
-package no.shj.payment.ruleengine.service.exception;
+package no.shj.payment.ruleengine.ruleservice.exception;
 
 public class PaymentRuleEngineException extends RuntimeException {
 

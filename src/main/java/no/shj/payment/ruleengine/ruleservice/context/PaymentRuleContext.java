@@ -1,4 +1,4 @@
-package no.shj.payment.ruleengine.service.context;
+package no.shj.payment.ruleengine.ruleservice.context;
 
 import com.neovisionaries.i18n.CountryCode;
 import java.math.BigDecimal;

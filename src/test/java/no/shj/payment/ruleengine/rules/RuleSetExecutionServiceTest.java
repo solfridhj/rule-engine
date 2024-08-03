@@ -2,22 +2,29 @@ package no.shj.payment.ruleengine.rules;
 
 import com.neovisionaries.i18n.CountryCode;
 import java.math.BigDecimal;
-import no.shj.payment.ruleengine.service.RuleSetExecutionService;
-import no.shj.payment.ruleengine.service.context.PaymentRuleContext;
+import no.shj.payment.ruleengine.database.RuleConfigurationDaoImpl;
+import no.shj.payment.ruleengine.ruleservice.RuleSetExecutionService;
+import no.shj.payment.ruleengine.ruleservice.context.PaymentRuleContext;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class RuleSetExecutionServiceTest {
-  /*
 
   @Autowired private RuleSetExecutionService ruleSetExecutionService;
 
+  // Mocking away the Cosmos DB - could also use test containers but had some issues with the setup.
+  @MockBean private RuleConfigurationDaoImpl<?> ruleConfigurationDao;
+
   @Test
-  @Disabled // need to use test containers here instead of calling actual db
-  void integrationTest() {
+  @Disabled
+  void evaluateRules() {
+
     PaymentRuleContext context =
         PaymentRuleContext.PaymentRuleContextBuilder.builder()
             .customerType("EMPLOYEE")
@@ -51,5 +58,5 @@ class RuleSetExecutionServiceTest {
             .cardType("CREDIT")
             .build();
     ruleSetExecutionService.evaluateRules(context3);
-  }*/
+  }
 }

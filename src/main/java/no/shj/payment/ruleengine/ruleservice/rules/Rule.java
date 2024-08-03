@@ -1,4 +1,4 @@
-package no.shj.payment.ruleengine.service.rules;
+package no.shj.payment.ruleengine.ruleservice.rules;
 
 public enum Rule {
   PAYMENT_METHOD_FROM_COUNTRY,

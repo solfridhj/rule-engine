@@ -1,10 +1,10 @@
 package no.shj.payment.ruleengine.function;
 
 import java.util.function.Function;
-import no.shj.payment.ruleengine.function.mapper.ContextDtoMapper;
-import no.shj.payment.ruleengine.function.request.RuleEngineRequestDto;
-import no.shj.payment.ruleengine.function.response.RuleEngineResponseDto;
-import no.shj.payment.ruleengine.service.RuleSetExecutionService;
+import no.shj.payment.ruleengine.function.rules.mapper.ContextDtoMapper;
+import no.shj.payment.ruleengine.function.rules.request.RuleEngineRequestDto;
+import no.shj.payment.ruleengine.function.rules.response.RuleEngineResponseDto;
+import no.shj.payment.ruleengine.ruleservice.RuleSetExecutionService;
 import org.springframework.stereotype.Component;
 
 // Note - starting point here - could also have mapped to the context at this point.

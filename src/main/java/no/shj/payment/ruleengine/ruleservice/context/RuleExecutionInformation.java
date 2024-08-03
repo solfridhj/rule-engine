@@ -1,8 +1,8 @@
-package no.shj.payment.ruleengine.service.context;
+package no.shj.payment.ruleengine.ruleservice.context;
 
 import java.util.HashMap;
 import java.util.Map;
-import no.shj.payment.ruleengine.service.rules.Rule;
+import no.shj.payment.ruleengine.ruleservice.rules.Rule;
 
 public class RuleExecutionInformation {
 

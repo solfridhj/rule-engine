@@ -1,15 +1,15 @@
-package no.shj.payment.ruleengine.function.mapper;
+package no.shj.payment.ruleengine.function.rules.mapper;
 
 import static java.util.Optional.ofNullable;
 
 import com.neovisionaries.i18n.CountryCode;
 import jakarta.validation.Valid;
 import javax.money.CurrencyUnit;
-import no.shj.payment.ruleengine.function.request.RuleEngineRequestDto;
-import no.shj.payment.ruleengine.function.response.ExecutionInformationDto;
-import no.shj.payment.ruleengine.function.response.RuleEngineResponseDto;
-import no.shj.payment.ruleengine.service.context.PaymentRuleContext;
-import no.shj.payment.ruleengine.service.context.RuleExecutionInformation;
+import no.shj.payment.ruleengine.function.rules.request.RuleEngineRequestDto;
+import no.shj.payment.ruleengine.function.rules.response.ExecutionInformationDto;
+import no.shj.payment.ruleengine.function.rules.response.RuleEngineResponseDto;
+import no.shj.payment.ruleengine.ruleservice.context.PaymentRuleContext;
+import no.shj.payment.ruleengine.ruleservice.context.RuleExecutionInformation;
 import org.javamoney.moneta.Money;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;

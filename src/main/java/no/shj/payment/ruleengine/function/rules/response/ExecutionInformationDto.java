@@ -1,4 +1,4 @@
-package no.shj.payment.ruleengine.function.response;
+package no.shj.payment.ruleengine.function.rules.response;
 
 import java.util.Map;
 

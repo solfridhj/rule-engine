@@ -1,12 +1,12 @@
-package no.shj.payment.ruleengine.service;
+package no.shj.payment.ruleengine.ruleservice;
 
-import no.shj.payment.ruleengine.service.context.PaymentRuleContext;
-import no.shj.payment.ruleengine.service.rules.AcquirerRoutingRule;
-import no.shj.payment.ruleengine.service.rules.FeeCalculationRule;
-import no.shj.payment.ruleengine.service.rules.PaymentMethodRule;
-import org.springframework.stereotype.Component;
+import no.shj.payment.ruleengine.ruleservice.context.PaymentRuleContext;
+import no.shj.payment.ruleengine.ruleservice.rules.AcquirerRoutingRule;
+import no.shj.payment.ruleengine.ruleservice.rules.FeeCalculationRule;
+import no.shj.payment.ruleengine.ruleservice.rules.PaymentMethodRule;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class RuleSetExecutionService {
 
   private final PaymentMethodRule paymentMethodRule;
@@ -26,6 +26,5 @@ public class RuleSetExecutionService {
     paymentMethodRule.executeRule(context);
     acquirerRoutingRule.executeRule(context);
     feeCalculationRule.executeRule(context);
-    // Add new rules here
   }
 }

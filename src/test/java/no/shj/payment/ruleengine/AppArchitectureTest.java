@@ -4,8 +4,8 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
-import no.shj.payment.ruleengine.service.genericengine.AbstractRule;
-import no.shj.payment.ruleengine.service.genericengine.RuleMetadata;
+import no.shj.payment.ruleengine.ruleservice.genericengine.AbstractRule;
+import no.shj.payment.ruleengine.ruleservice.genericengine.RuleMetadata;
 import org.junit.jupiter.api.Test;
 
 class AppArchitectureTest {

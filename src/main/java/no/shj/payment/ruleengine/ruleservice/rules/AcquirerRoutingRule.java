@@ -1,13 +1,13 @@
-package no.shj.payment.ruleengine.service.rules;
+package no.shj.payment.ruleengine.ruleservice.rules;
 
-import static no.shj.payment.ruleengine.service.rules.Rule.ACQUIRER_ROUTING;
+import static no.shj.payment.ruleengine.ruleservice.rules.Rule.ACQUIRER_ROUTING;
 
 import java.util.*;
 import no.shj.payment.ruleengine.database.RuleConfigurationDaoImpl;
-import no.shj.payment.ruleengine.service.context.PaymentRuleContext;
-import no.shj.payment.ruleengine.service.context.RuleExecutionResult;
-import no.shj.payment.ruleengine.service.genericengine.AbstractRule;
-import no.shj.payment.ruleengine.service.genericengine.RuleMetadata;
+import no.shj.payment.ruleengine.ruleservice.context.PaymentRuleContext;
+import no.shj.payment.ruleengine.ruleservice.context.RuleExecutionResult;
+import no.shj.payment.ruleengine.ruleservice.genericengine.AbstractRule;
+import no.shj.payment.ruleengine.ruleservice.genericengine.RuleMetadata;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.apache.commons.math3.util.Pair;
 

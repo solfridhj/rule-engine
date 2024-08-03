@@ -1,12 +1,12 @@
-package no.shj.payment.ruleengine.service.genericengine;
+package no.shj.payment.ruleengine.ruleservice.genericengine;
 
 import java.util.Map;
 import java.util.Optional;
 import no.shj.payment.ruleengine.database.RuleConfigurationDaoImpl;
-import no.shj.payment.ruleengine.service.context.PaymentRuleContext;
-import no.shj.payment.ruleengine.service.context.RuleExecutionInformation;
-import no.shj.payment.ruleengine.service.context.RuleExecutionResult;
-import no.shj.payment.ruleengine.service.exception.PaymentRuleEngineException;
+import no.shj.payment.ruleengine.ruleservice.context.PaymentRuleContext;
+import no.shj.payment.ruleengine.ruleservice.context.RuleExecutionInformation;
+import no.shj.payment.ruleengine.ruleservice.context.RuleExecutionResult;
+import no.shj.payment.ruleengine.ruleservice.exception.PaymentRuleEngineException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
