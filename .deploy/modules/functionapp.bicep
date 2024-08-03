@@ -44,7 +44,6 @@ resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
     enabled: true
     siteConfig: {
       numberOfWorkers: 1
-      linuxFxVersion: 'Java|21'
       functionAppScaleLimit: 5
 
     }
