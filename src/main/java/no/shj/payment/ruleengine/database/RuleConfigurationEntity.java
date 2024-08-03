@@ -1,22 +1,27 @@
 package no.shj.payment.ruleengine.database;
 
 import com.microsoft.azure.spring.data.cosmosdb.core.mapping.Document;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import no.shj.payment.ruleengine.rules.Rule;
+import no.shj.payment.ruleengine.service.rules.Rule;
+import org.springframework.data.annotation.Id;
 
 // TODO - keep it hexagonal, should map this to domain-objects to separate from the port.
 @Document(collection = "rule-configuration-container")
 public class RuleConfigurationEntity<T> {
 
-  private String id;
-  private Rule ruleId;
-  private LocalDateTime createdTimeStamp;
-  private LocalDateTime updatedTimeStamp;
+  @Id @NotBlank private String id;
+  @NotNull private Rule ruleId;
+  @Nullable private LocalDateTime createdTimeStamp;
+  @Nullable private LocalDateTime updatedTimeStamp;
+
   // General configuration data - common for all rules
   private boolean isActive;
 
   // Rule specific configuration data
-  private T ruleSpecificConfigurationData;
+  @NotNull private T ruleSpecificConfigurationData;
 
   public String getId() {
     return id;

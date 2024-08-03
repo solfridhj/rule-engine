@@ -40,6 +40,7 @@ public class EngineRuleHandler {
           .header("Content-Type", "application/json")
           .build();
     } catch (Exception e) {
+      // TODO - could be a lot better
       var problemDetail =
           ProblemDetail.forStatus(org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR);
       problemDetail.setInstance(URI.create("/payments"));

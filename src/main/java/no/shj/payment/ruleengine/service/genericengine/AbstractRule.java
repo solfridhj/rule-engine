@@ -1,22 +1,22 @@
-package no.shj.payment.ruleengine.generic;
+package no.shj.payment.ruleengine.service.genericengine;
 
 import java.util.Map;
 import java.util.Optional;
-import no.shj.payment.ruleengine.context.PaymentRuleContext;
-import no.shj.payment.ruleengine.context.RuleExecutionInformation;
-import no.shj.payment.ruleengine.context.RuleExecutionResult;
-import no.shj.payment.ruleengine.database.RuleConfigurationRepository;
-import no.shj.payment.ruleengine.exception.PaymentRuleEngineException;
+import no.shj.payment.ruleengine.database.RuleConfigurationDaoImpl;
+import no.shj.payment.ruleengine.service.context.PaymentRuleContext;
+import no.shj.payment.ruleengine.service.context.RuleExecutionInformation;
+import no.shj.payment.ruleengine.service.context.RuleExecutionResult;
+import no.shj.payment.ruleengine.service.exception.PaymentRuleEngineException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractRule<T, S> {
 
   // TODO - see if this can be the specific object structure deserialization.
-  private final RuleConfigurationRepository<S> configurationRepository;
+  private final RuleConfigurationDaoImpl<S> ruleConfigurationDao;
 
-  protected AbstractRule(RuleConfigurationRepository<S> configurationRepository) {
-    this.configurationRepository = configurationRepository;
+  protected AbstractRule(RuleConfigurationDaoImpl<S> ruleConfigurationDao) {
+    this.ruleConfigurationDao = ruleConfigurationDao;
   }
 
   private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -31,7 +31,7 @@ public abstract class AbstractRule<T, S> {
     var metadata = this.getClass().getAnnotation(RuleMetadata.class);
     var ruleId = metadata.ruleId();
 
-    var ruleConfigurationOptional = configurationRepository.findByRuleId(ruleId);
+    var ruleConfigurationOptional = ruleConfigurationDao.getRuleConfigurationEntity(ruleId);
     if (ruleConfigurationOptional.isEmpty()) {
       throw new PaymentRuleEngineException(
           String.format("Rule id %s is missing configuration", ruleId));

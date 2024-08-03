@@ -1,14 +1,14 @@
-package no.shj.payment.ruleengine.rules;
+package no.shj.payment.ruleengine.service.rules;
 
-import static no.shj.payment.ruleengine.rules.Rule.ACQUIRER_ROUTING;
+import static no.shj.payment.ruleengine.service.rules.Rule.ACQUIRER_ROUTING;
 
 import java.math.BigDecimal;
 import java.util.*;
-import no.shj.payment.ruleengine.context.PaymentRuleContext;
-import no.shj.payment.ruleengine.context.RuleExecutionResult;
-import no.shj.payment.ruleengine.database.RuleConfigurationRepository;
-import no.shj.payment.ruleengine.generic.AbstractRule;
-import no.shj.payment.ruleengine.generic.RuleMetadata;
+import no.shj.payment.ruleengine.database.RuleConfigurationDaoImpl;
+import no.shj.payment.ruleengine.service.context.PaymentRuleContext;
+import no.shj.payment.ruleengine.service.context.RuleExecutionResult;
+import no.shj.payment.ruleengine.service.genericengine.AbstractRule;
+import no.shj.payment.ruleengine.service.genericengine.RuleMetadata;
 import org.apache.commons.math3.distribution.EnumeratedDistribution;
 import org.apache.commons.math3.util.Pair;
 
@@ -19,9 +19,9 @@ public class AcquirerRoutingRule
     extends AbstractRule<String, Map<String, Map<String, Map<String, String>>>> {
 
   public AcquirerRoutingRule(
-      RuleConfigurationRepository<Map<String, Map<String, Map<String, String>>>>
-          configurationRepository) {
-    super(configurationRepository);
+      RuleConfigurationDaoImpl<Map<String, Map<String, Map<String, String>>>>
+          ruleConfigurationDao) {
+    super(ruleConfigurationDao);
   }
 
   @Override
@@ -56,13 +56,13 @@ public class AcquirerRoutingRule
     var paymentMethod = context.getPaymentMethod();
     var paymentCurrency = context.getPaymentCurrency();
     var mapForCurrency = config.get(paymentCurrency);
-    if (mapForCurrency.isEmpty()) {
+    if (mapForCurrency == null || mapForCurrency.isEmpty()) {
       // Acquirer is not changed for the provided currency.
       return Optional.empty();
     }
 
     Map<String, String> acquirerAndProbability = mapForCurrency.get(paymentMethod);
-    if (acquirerAndProbability.isEmpty()) {
+    if (acquirerAndProbability == null || acquirerAndProbability.isEmpty()) {
       // Combination of currency and payment method does not lead to change in acquirer.
       return Optional.empty();
     }

@@ -70,8 +70,18 @@
 			<version>1.3.0</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- Azure specific -->
 
+		<!-- For cache - using Caffeine as I need to set an eviction policy -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+			<version>3.1.8</version>
+		</dependency>
+		<!-- Azure specific -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-function-adapter-azure</artifactId>
