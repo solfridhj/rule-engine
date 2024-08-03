@@ -50,4 +50,8 @@ jobs:
           slot-name: 'Production'
           package: '${{ env.PACKAGE_DIRECTORY }}'
           respect-pom-xml: true
+
+      - name: 'Set environment variables'
+        run: |
+          az functionapp config appsettings set --name payment-engine-dev --resource-group test-group-dev --settings "SPRING_CLOUD_AZURE_COSMOS_KEY=${{ secrets.COSMOS_DB_KEY }}"
           
