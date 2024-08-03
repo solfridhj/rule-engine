@@ -31,4 +31,4 @@ jobs:
             az deployment group create \
             --resource-group ${{ env.RESOURCE_GROUP_NAME }}
             --template-file ./deploy/main.bicep
-            --parameters @parameters.json
+            --parameters @.deploy/parameters.json
