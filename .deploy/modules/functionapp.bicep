@@ -28,6 +28,9 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   location: location
   tags: commonTags
   kind: 'linux'
+  properties: {
+    reserved: true
+  } 
   sku: {
     name: 'Y1'
     tier: 'Dynamic'
