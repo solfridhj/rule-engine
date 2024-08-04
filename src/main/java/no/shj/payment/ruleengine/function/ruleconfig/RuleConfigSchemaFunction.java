@@ -44,7 +44,7 @@ public class RuleConfigSchemaFunction
       JakartaValidationModule module =
           new JakartaValidationModule(JakartaValidationOption.INCLUDE_PATTERN_EXPRESSIONS);
       SchemaGeneratorConfigBuilder configBuilder =
-          new SchemaGeneratorConfigBuilder(SchemaVersion.DRAFT_2020_12, OptionPreset.PLAIN_JSON)
+          new SchemaGeneratorConfigBuilder(SchemaVersion.DRAFT_7, OptionPreset.PLAIN_JSON)
               .with(module);
       SchemaGeneratorConfig config = configBuilder.build();
       SchemaGenerator generator = new SchemaGenerator(config);
