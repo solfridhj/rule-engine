@@ -21,7 +21,11 @@ public class RuleConfigMapper {
         .setIsActive(ruleConfiguration.getIsActive())
         .setCreatedBy(ruleConfiguration.getCreatedBy())
         .setCreatedDate(
-            ruleConfiguration.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+            ruleConfiguration.getCreatedDate() != null
+                ? ruleConfiguration
+                    .getCreatedDate()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                : null)
         .setRuleSpecificConfigurationData(ruleConfiguration.getRuleSpecificConfigurationData());
   }
 }
