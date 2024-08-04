@@ -1,0 +1,154 @@
+{
+  "name": "payments",
+  "version": "1",
+  "items": [
+    {
+      "type": "folder",
+      "name": "Rules",
+      "items": [
+        {
+          "type": "http",
+          "name": "Evaluate payment",
+          "seq": 1,
+          "request": {
+            "url": "{{url}}/api/payments",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "ApiKey",
+                "value": "devMockKey",
+                "enabled": true
+              }
+            ],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"customerType\": \"EMPLOYEE\",\n  \"transactionAmount\": 20004.23,\n  \"paymentMethod\": \"MASTERCARD\",\n  \"paymentOriginCountry\": \"NO\",\n  \"paymentCurrency\": \"SEK\",\n  \"cardType\": \"CREDIT\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "Configurations",
+      "items": [
+        {
+          "type": "http",
+          "name": "Get rule configuration",
+          "seq": 1,
+          "request": {
+            "url": "{{url}}/api/payments-configuration",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Update rule config",
+          "seq": 2,
+          "request": {
+            "url": "{{url}}/api/payments-configuration-update",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"ruleId\": \"PAYMENT_METHOD_FROM_COUNTRY\",\n  \"isActive\": true,\n  \"ruleSpecificConfigurationData\": {\n      \"paymentMethodMappings\": [\n        {\n          \"paymentOriginCountryCode\": \"NO\",\n          \"paymentMethod\": \"VIPPS\"\n        },\n        {\n          \"paymentOriginCountryCode\": \"SE\",\n          \"paymentMethod\": \"SWISH\"\n        },\n        {\n          \"paymentOriginCountryCode\": \"US\",\n          \"paymentMethod\": \"ONLINE\"\n        },\n        {\n          \"paymentOriginCountryCode\": \"UK\",\n          \"paymentMethod\": \"WIRE TRANSFER\"\n        }\n      ]\n    } \n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Get rule schema",
+          "seq": 3,
+          "request": {
+            "url": "{{url}}/api/payments-configuration-schema",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "activeEnvironmentUid": "Y4FOWKqG1RcZOI8REgRBd",
+  "environments": [
+    {
+      "variables": [
+        {
+          "name": "url",
+          "value": "http://localhost:7071",
+          "enabled": true,
+          "secret": false,
+          "type": "text"
+        }
+      ],
+      "name": "local"
+    },
+    {
+      "variables": [
+        {
+          "name": "url",
+          "value": "https://payment-rules-fapp-preprod.azurewebsites.net",
+          "enabled": true,
+          "secret": false,
+          "type": "text"
+        }
+      ],
+      "name": "preprod"
+    }
+  ],
+  "brunoConfig": {
+    "version": "1",
+    "name": "payments",
+    "type": "collection",
+    "ignore": [
+      "node_modules",
+      ".git"
+    ]
+  }
+}
