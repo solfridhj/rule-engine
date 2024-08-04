@@ -10,26 +10,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import no.shj.payment.ruleengine.ruleservice.genericengine.RuleMetadata;
+import no.shj.payment.ruleengine.ruleservice.rules.Rule;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RuleConfigSchemaFunction implements Function<Void, List<JsonNode>> {
+public class RuleConfigSchemaFunction
+    implements Function<Void, List<RuleConfigSchemaFunction.SchemaInformation>> {
 
-  private Reflections reflections;
+  private final Reflections reflections;
 
   public RuleConfigSchemaFunction(Reflections reflections) {
     this.reflections = reflections;
   }
 
   @Override
-  public List<JsonNode> apply(Void notUsed) {
+  public List<SchemaInformation> apply(Void notUsed) {
 
-    List<JsonNode> printedRules = new ArrayList<>();
+    List<SchemaInformation> printedRules = new ArrayList<>();
 
     Set<Class<?>> allRules = reflections.getTypesAnnotatedWith(RuleMetadata.class);
     for (Class<?> clazz : allRules) {
+
+      var metadata = clazz.getAnnotation(RuleMetadata.class);
       ParameterizedType asParametrizedType = (ParameterizedType) clazz.getGenericSuperclass();
       Type[] typeArguments = asParametrizedType.getActualTypeArguments();
       Type configType = typeArguments[1];
@@ -42,8 +49,17 @@ public class RuleConfigSchemaFunction implements Function<Void, List<JsonNode>> 
       SchemaGeneratorConfig config = configBuilder.build();
       SchemaGenerator generator = new SchemaGenerator(config);
       JsonNode jsonSchema = generator.generateSchema(configType);
-      printedRules.add(jsonSchema);
+      printedRules.add(
+          new SchemaInformation().setJsonNode(jsonSchema).setRuleId(metadata.ruleId()));
     }
     return printedRules;
+  }
+
+  @Data
+  @NoArgsConstructor
+  @Accessors(chain = true)
+  public static class SchemaInformation {
+    private Rule ruleId;
+    private JsonNode jsonNode;
   }
 }
