@@ -4,6 +4,8 @@
 The application with its HTTP API is deployed to https://payment-rules-fapp-preprod.azurewebsites.net/api. No API key or any other form of auth
 is required (just for ease of testing, in prod of course there would be some kind of auth). Access from all public IPs is allowed. 
 
+Contact can be seen here: https://app.swaggerhub.com/apis-docs/SOLFRIDHAGENJOHANSEN/PaymentsAPI/1.0.0 
+which is the same as the "api-contract.yaml" file (should be improved, some missing validations)
 
 There are two "categories" of functions in the application.
 1. Rule configuration administration and viewing (payments/configurations)
