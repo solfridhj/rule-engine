@@ -2,6 +2,7 @@ package no.shj.payment.ruleengine.function;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.azure.functions.*;
 import com.microsoft.azure.functions.annotation.AuthorizationLevel;
@@ -30,6 +31,8 @@ public class EngineRuleHandler {
   private final RuleConfigExecutionFunction ruleConfigExecutionFunction;
   private final UpdateRuleExecutionFunction updateRuleExecutionFunction;
   private final RuleConfigSchemaFunction ruleConfigSchemaFunction;
+
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
   public EngineRuleHandler(
       RuleExecutionFunction executionFunction,
@@ -84,6 +87,7 @@ public class EngineRuleHandler {
           HttpRequestMessage<Optional<String>> request,
       ExecutionContext context) {
     var result = ruleConfigExecutionFunction.apply(null);
+
     return request
         .createResponseBuilder(HttpStatus.OK)
         .body(result)
@@ -99,11 +103,14 @@ public class EngineRuleHandler {
               authLevel = AuthorizationLevel.ANONYMOUS,
               route = "payments/configurations")
           HttpRequestMessage<Optional<String>> request,
-      ExecutionContext context) {
-    var result = ruleConfigSchemaFunction.apply(null);
+      ExecutionContext context)
+      throws JsonProcessingException {
+
+    var jsonNode = ruleConfigSchemaFunction.apply(null);
+    String asString = objectMapper.writeValueAsString(jsonNode);
     return request
         .createResponseBuilder(HttpStatus.OK)
-        .body(result)
+        .body(asString)
         .header("Content-Type", "application/json")
         .build();
   }

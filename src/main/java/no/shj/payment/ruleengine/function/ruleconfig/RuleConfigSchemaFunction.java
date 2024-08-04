@@ -1,5 +1,7 @@
 package no.shj.payment.ruleengine.function.ruleconfig;
 
+import static com.github.victools.jsonschema.generator.Option.EXTRA_OPEN_API_FORMAT_VALUES;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.victools.jsonschema.generator.*;
 import com.github.victools.jsonschema.module.jakarta.validation.JakartaValidationModule;
@@ -43,12 +45,15 @@ public class RuleConfigSchemaFunction
 
       JakartaValidationModule module =
           new JakartaValidationModule(JakartaValidationOption.INCLUDE_PATTERN_EXPRESSIONS);
+
       SchemaGeneratorConfigBuilder configBuilder =
           new SchemaGeneratorConfigBuilder(SchemaVersion.DRAFT_7, OptionPreset.PLAIN_JSON)
-              .with(module);
+              .with(module)
+              .with(EXTRA_OPEN_API_FORMAT_VALUES);
       SchemaGeneratorConfig config = configBuilder.build();
       SchemaGenerator generator = new SchemaGenerator(config);
       JsonNode jsonSchema = generator.generateSchema(configType);
+
       printedRules.add(
           new SchemaInformation().setJsonNode(jsonSchema).setRuleId(metadata.ruleId()));
     }
