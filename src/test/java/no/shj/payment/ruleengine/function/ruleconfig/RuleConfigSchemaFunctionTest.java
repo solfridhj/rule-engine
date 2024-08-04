@@ -1,16 +1,20 @@
 package no.shj.payment.ruleengine.function.ruleconfig;
 
+import static no.shj.payment.ruleengine.testconfig.ReflectionsTestsConfig.createTestReflections;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import org.reflections.Reflections;
 
 class RuleConfigSchemaFunctionTest {
 
-  RuleConfigSchemaFunction function = new RuleConfigSchemaFunction();
+  private final Reflections reflections = createTestReflections();
+  RuleConfigSchemaFunction function = new RuleConfigSchemaFunction(reflections);
 
   @Test
   void getSchemaForAllRules() {
-    var outputStringList = function.apply(null);
-    assertThat(outputStringList).hasSize(3);
+    var outputList = function.apply(null);
+    assertThat(outputList).hasSize(2);
+    assertThat(outputList.getFirst().toPrettyString()).contains("mockObject");
   }
 }

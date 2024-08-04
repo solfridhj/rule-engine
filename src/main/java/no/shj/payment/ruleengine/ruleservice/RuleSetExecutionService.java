@@ -14,15 +14,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class RuleSetExecutionService {
 
-  private ApplicationContext applicationContext;
+  private final ApplicationContext applicationContext;
+  private final Reflections reflections;
 
-  public RuleSetExecutionService(ApplicationContext applicationContext) {
+  public RuleSetExecutionService(ApplicationContext applicationContext, Reflections reflections) {
     this.applicationContext = applicationContext;
+    this.reflections = reflections;
   }
 
   public void evaluateRules(PaymentRuleContext context) {
 
-    Reflections reflections = new Reflections("no.shj.payment.ruleengine");
     Set<Class<? extends AbstractRule>> ruleClasses = reflections.getSubTypesOf(AbstractRule.class);
 
     for (Class<? extends AbstractRule> ruleClass : ruleClasses) {

@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import no.shj.payment.ruleengine.database.RuleConfigurationDao;
 import no.shj.payment.ruleengine.database.RuleConfigurationEntity;
 import no.shj.payment.ruleengine.ruleservice.ExistingRulesService;
@@ -26,19 +23,23 @@ public class RuleConfigService {
 
   private final RuleConfigurationDao ruleConfigurationDao;
   private final ExistingRulesService existingRulesService;
+  private final Reflections reflections;
 
   private final ObjectMapper objectMapper = new ObjectMapper();
 
   public RuleConfigService(
-      RuleConfigurationDao ruleConfigurationDao, ExistingRulesService existingRulesService) {
+      RuleConfigurationDao ruleConfigurationDao,
+      ExistingRulesService existingRulesService,
+      Reflections reflections) {
     this.ruleConfigurationDao = ruleConfigurationDao;
     this.existingRulesService = existingRulesService;
+    this.reflections = reflections;
   }
 
-  public List<RuleConfigurationEntity> getAllRulesAndConfig() {
+  public Set<RuleConfigurationEntity> getAllRulesAndConfig() {
     var ruleIdAndVersions = existingRulesService.getAllExistingRules();
 
-    ArrayList<RuleConfigurationEntity> allRuleConfigurations = new ArrayList<>();
+    Set<RuleConfigurationEntity> allRuleConfigurations = new HashSet<>();
 
     for (var ruleIdAndVersion : ruleIdAndVersions) {
       var storedConfiguration =
@@ -49,6 +50,9 @@ public class RuleConfigService {
         allRuleConfigurations.add(
             new RuleConfigurationEntity().setRuleId(ruleIdAndVersion.getRuleId()));
       } else {
+        // Note: Not mapping the rule specific configuration to the object type as the object will
+        // be corret
+        // in the request anyway.
         allRuleConfigurations.add(storedConfiguration.get());
       }
     }
@@ -56,8 +60,6 @@ public class RuleConfigService {
   }
 
   public RuleConfigurationEntity saveRuleConfiguration(RuleConfigurationEntity entity) {
-
-    Reflections reflections = new Reflections("no.shj.payment.ruleengine");
     Integer ruleVersionNr = null;
     boolean foundClass = false;
     Set<Class<?>> allRules = reflections.getTypesAnnotatedWith(RuleMetadata.class);

@@ -4,10 +4,12 @@ import static no.shj.payment.ruleengine.ruleservice.rules.Rule.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import org.reflections.Reflections;
 
 class ExistingRulesServiceTest {
 
-  private final ExistingRulesService existingRulesService = new ExistingRulesService();
+  private final Reflections reflections = new Reflections("no.shj.payment.ruleengine");
+  private final ExistingRulesService existingRulesService = new ExistingRulesService(reflections);
 
   @Test
   void getAllExistingRules() {

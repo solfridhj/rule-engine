@@ -12,8 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExistingRulesService {
 
+  private final Reflections reflections;
+
+  public ExistingRulesService(Reflections reflections) {
+    this.reflections = reflections;
+  }
+
   public Set<RuleAndVersion> getAllExistingRules() {
-    Reflections reflections = new Reflections("no.shj.payment.ruleengine");
     var existingRules = reflections.getTypesAnnotatedWith(RuleMetadata.class);
     return existingRules.stream()
         .map(clazz -> clazz.getAnnotation(RuleMetadata.class))

@@ -17,12 +17,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class RuleConfigSchemaFunction implements Function<Void, List<JsonNode>> {
 
+  private Reflections reflections;
+
+  public RuleConfigSchemaFunction(Reflections reflections) {
+    this.reflections = reflections;
+  }
+
   @Override
   public List<JsonNode> apply(Void notUsed) {
 
     List<JsonNode> printedRules = new ArrayList<>();
 
-    Reflections reflections = new Reflections("no.shj.payment.ruleengine");
     Set<Class<?>> allRules = reflections.getTypesAnnotatedWith(RuleMetadata.class);
     for (Class<?> clazz : allRules) {
       ParameterizedType asParametrizedType = (ParameterizedType) clazz.getGenericSuperclass();

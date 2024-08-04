@@ -1,7 +1,8 @@
 package no.shj.payment.ruleengine.function.ruleconfig;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import no.shj.payment.ruleengine.database.RuleConfigurationEntity;
 import no.shj.payment.ruleengine.function.ruleconfig.response.ExistingRulesResponseDto;
 import org.springframework.stereotype.Component;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class RuleConfigMapper {
 
-  public List<ExistingRulesResponseDto> map(List<RuleConfigurationEntity> result) {
-    return result.stream().map(this::map).toList();
+  public Set<ExistingRulesResponseDto> map(Set<RuleConfigurationEntity> result) {
+    return result.stream().map(this::map).collect(Collectors.toSet());
   }
 
   private ExistingRulesResponseDto map(RuleConfigurationEntity ruleConfiguration) {
