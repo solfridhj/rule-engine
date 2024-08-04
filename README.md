@@ -3,7 +3,9 @@
 ## Implemented Functions
 The application with its HTTP API is deployed to https://payment-rules-fapp-preprod.azurewebsites.net. No API key or any other form of auth
 is required (just for ease of testing, in prod of course there would be some kind of auth). Access from all public IPs is allowed. 
-To see the URLs of all the functions: 
+
+All implemented APIs are
+POST 
 
 There are two "categories" of functions in the application.
 1. Rule configuration administration and viewing. 
