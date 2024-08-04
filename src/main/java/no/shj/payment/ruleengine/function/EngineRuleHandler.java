@@ -28,8 +28,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class EngineRuleHandler {
 
-  Logger log = LoggerFactory.getLogger(this.getClass());
-
   private final RuleExecutionFunction executionFunction;
   private final RuleConfigExecutionFunction ruleConfigExecutionFunction;
   private final UpdateRuleExecutionFunction updateRuleExecutionFunction;
@@ -46,12 +44,12 @@ public class EngineRuleHandler {
     this.ruleConfigSchemaFunction = ruleConfigSchemaFunction;
   }
 
-  @FunctionName("payments")
+  @FunctionName("evaluateRules")
   public HttpResponseMessage evaluateRules(
       @HttpTrigger(
               name = "request",
               methods = {HttpMethod.POST},
-              authLevel = AuthorizationLevel.ANONYMOUS)
+              authLevel = AuthorizationLevel.ANONYMOUS, route = "/payments/rules")
           HttpRequestMessage<Optional<RuleEngineRequestDto>> request) {
 
     if (request.getBody().isEmpty()) {
@@ -77,12 +75,12 @@ public class EngineRuleHandler {
     }
   }
 
-  @FunctionName("payments-configuration")
+  @FunctionName("getAllRules")
   public HttpResponseMessage getAllRules(
       @HttpTrigger(
               name = "request",
               methods = {HttpMethod.GET},
-              authLevel = AuthorizationLevel.ANONYMOUS)
+              authLevel = AuthorizationLevel.ANONYMOUS, route = "/payments/rules")
           HttpRequestMessage<Optional<String>> request,
       ExecutionContext context) {
     var result = ruleConfigExecutionFunction.apply(null);
@@ -93,12 +91,12 @@ public class EngineRuleHandler {
         .build();
   }
 
-  @FunctionName("payments-configuration-schema")
+  @FunctionName("getRuleConfigSchema")
   public HttpResponseMessage getRuleConfigSchema(
       @HttpTrigger(
               name = "request",
               methods = {HttpMethod.GET},
-              authLevel = AuthorizationLevel.ANONYMOUS)
+              authLevel = AuthorizationLevel.ANONYMOUS, route = "/payments/configurations")
           HttpRequestMessage<Optional<String>> request,
       ExecutionContext context) {
     var result = ruleConfigSchemaFunction.apply(null);
@@ -109,12 +107,12 @@ public class EngineRuleHandler {
         .build();
   }
 
-  @FunctionName("payments-configuration-update")
+  @FunctionName("updateRuleConfiguration")
   public HttpResponseMessage updateRuleConfiguration(
       @HttpTrigger(
               name = "request",
               methods = {HttpMethod.POST},
-              authLevel = AuthorizationLevel.ANONYMOUS)
+              authLevel = AuthorizationLevel.ANONYMOUS, route = "/payments/configurations")
           HttpRequestMessage<Optional<UpdateRuleConfigurationRequestDto>> request,
       ExecutionContext context) {
 

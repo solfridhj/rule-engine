@@ -1,29 +1,40 @@
 # Payment rules Azure Function application
 
+## Implemented Functions
+The application with its HTTP API is deployed to https://payment-rules-fapp-preprod.azurewebsites.net. No API key or any other form of auth
+is required (just for ease of testing, in prod of course there would be some kind of auth). Access from all public IPs is allowed. 
+To see the URLs of all the functions: 
+
+There are two "categories" of functions in the application.
+1. Rule configuration administration and viewing. 
+2. Rule execution. 
+
+
+
 ## Application/System Architecture
 The rules-engine consists of a Spring Boot application, deployed as an Azure Function app using `spring-cloud-function-adapter-azure`. 
 Although the application is deployed to Azure, The service layer (which contains the engine itself) is kept separate from 
 knowing about the Azure Function setup. To replace the Azure function app with a regular Spring Boot Webapp or an AWS Lambda, 
-only this integration layer with the definition of the Azure function and some maven configuration needs to be changed.
+only the integration layer with the definition of the Azure function and some maven configuration needs to be changed.
+In addition, the database layer (in its own package) can also easily be changed. 
 
-Note: A downside to using Spring Boot is that it has a relatively long startup time. 
+Note: A downside to using Spring Boot is that it has a relatively long startup time, so other options could be considered.
 
 ```mermaid
   flowchart LR;
-      A[1. Rule execution request] --> B[2. Application gateway];
-      B --> C[3. Azure Function App]
-      C --> D[4. Azure Cosmos DB]
+      A[1. Rule execution request] --> B[3. Azure Function App];
+      B --> C[3. Azure Cosmos DB]
       
 ```
 
 In the rules-engine its assumed that all data required to evaluate the rules is provided as input. 
 I.e., if any new data is needed for a completely new rule, the endpoint needs to be provided that data as input. 
 
-1. An HTTP request is sent from a client server towards the application gateway. The application gateway routes the request to
-the correct backend.
-2. Application gateway
-3. The rules engine is deployed as an Azure function app (same principle as AWS Lambda). The reason for using this is due to its 
+1. An HTTP request is sent from a client server towards the Azure function.
+2. The rules engine is deployed as an Azure function app (same principle as AWS Lambda). The reason for using this is due to its 
 ease of configuration, scalability, and pricing model paying for usage only. 
+3. An Azure Cosmos DB is used in the rules engine to fetch the most recent configuration data as well as allowing seeing all configurations, adding new configurations and seeing the schema for configurations.
+
 
 
 ## Local development
