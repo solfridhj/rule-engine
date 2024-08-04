@@ -20,8 +20,6 @@ import no.shj.payment.ruleengine.function.ruleconfig.updaterule.UpdateRuleConfig
 import no.shj.payment.ruleengine.function.rules.RuleExecutionFunction;
 import no.shj.payment.ruleengine.function.rules.request.RuleEngineRequestDto;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ProblemDetail;
 import org.springframework.stereotype.Component;
 
@@ -49,7 +47,8 @@ public class EngineRuleHandler {
       @HttpTrigger(
               name = "request",
               methods = {HttpMethod.POST},
-              authLevel = AuthorizationLevel.ANONYMOUS, route = "payments/rules")
+              authLevel = AuthorizationLevel.ANONYMOUS,
+              route = "payments/rules")
           HttpRequestMessage<Optional<RuleEngineRequestDto>> request) {
 
     if (request.getBody().isEmpty()) {
@@ -80,7 +79,8 @@ public class EngineRuleHandler {
       @HttpTrigger(
               name = "request",
               methods = {HttpMethod.GET},
-              authLevel = AuthorizationLevel.ANONYMOUS, route = "payments/rules")
+              authLevel = AuthorizationLevel.ANONYMOUS,
+              route = "payments/rules")
           HttpRequestMessage<Optional<String>> request,
       ExecutionContext context) {
     var result = ruleConfigExecutionFunction.apply(null);
@@ -96,7 +96,8 @@ public class EngineRuleHandler {
       @HttpTrigger(
               name = "request",
               methods = {HttpMethod.GET},
-              authLevel = AuthorizationLevel.ANONYMOUS, route = "payments/configurations")
+              authLevel = AuthorizationLevel.ANONYMOUS,
+              route = "payments/configurations")
           HttpRequestMessage<Optional<String>> request,
       ExecutionContext context) {
     var result = ruleConfigSchemaFunction.apply(null);
@@ -112,7 +113,8 @@ public class EngineRuleHandler {
       @HttpTrigger(
               name = "request",
               methods = {HttpMethod.POST},
-              authLevel = AuthorizationLevel.ANONYMOUS, route = "payments/configurations")
+              authLevel = AuthorizationLevel.ANONYMOUS,
+              route = "payments/configurations")
           HttpRequestMessage<Optional<UpdateRuleConfigurationRequestDto>> request,
       ExecutionContext context) {
 

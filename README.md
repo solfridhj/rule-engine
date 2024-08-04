@@ -43,7 +43,7 @@ With the setup, if no new input and/or output data is required (which is likely 
 3. Return info about config schema
 4. Set and update config schema
 
-is to **create a new class extending the AbstractRule**. So this means that there is e.g. no manual steps to allow updating the schema, it just works.
+is to **create a new class extending the AbstractRule** (and adding one new enum with ID). So this means that there is e.g. no manual steps to allow updating the schema, it just works.
 
 
 ## System Architecture
