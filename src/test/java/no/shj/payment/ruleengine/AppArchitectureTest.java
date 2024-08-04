@@ -25,4 +25,5 @@ class AppArchitectureTest {
 
     rule.check(javaClasses);
   }
+
 }

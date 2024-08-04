@@ -1,4 +1,4 @@
-package no.shj.payment.ruleengine.function;
+package no.shj.payment.ruleengine.function.rules;
 
 import java.util.function.Function;
 import no.shj.payment.ruleengine.function.rules.mapper.ContextDtoMapper;

@@ -1,81 +1,48 @@
 package no.shj.payment.ruleengine.database;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.microsoft.azure.spring.data.cosmosdb.core.mapping.Document;
-import jakarta.annotation.Nullable;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import no.shj.payment.ruleengine.ruleservice.rules.Rule;
 import org.springframework.data.annotation.Id;
 
-// TODO - keep it separate from domain layer, should map this to domain-objects to separate from the
-// port.
+@Data
+@Accessors(chain = true)
 @Document(collection = "rule-configuration-container")
-public class RuleConfigurationEntity<T> {
+@NoArgsConstructor
+public class RuleConfigurationEntity {
 
   @Id @NotBlank private String id;
+
   @NotNull private Rule ruleId;
-  @Nullable private LocalDateTime createdTimeStamp;
-  @Nullable private LocalDateTime updatedTimeStamp;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  @NotNull
+  private LocalDate createdDate;
+
+  @NotNull private String createdBy;
+  @NotNull private Integer structureVersion;
 
   // General configuration data - common for all rules
   private boolean isActive;
 
   // Rule specific configuration data
-  @NotNull private T ruleSpecificConfigurationData;
+  @NotNull private Integer ruleSpecificConfigurationVersion;
+  @NotNull @Valid private Object ruleSpecificConfigurationData;
 
-  public String getId() {
-    return id;
-  }
-
-  public RuleConfigurationEntity<T> setId(String id) {
-    this.id = id;
-    return this;
-  }
-
-  public Rule getRuleId() {
-    return ruleId;
-  }
-
-  public RuleConfigurationEntity<T> setRuleId(Rule ruleId) {
-    this.ruleId = ruleId;
-    return this;
-  }
-
-  public LocalDateTime getCreatedTimeStamp() {
-    return createdTimeStamp;
-  }
-
-  public RuleConfigurationEntity<T> setCreatedTimeStamp(LocalDateTime createdTimeStamp) {
-    this.createdTimeStamp = createdTimeStamp;
-    return this;
-  }
-
-  public LocalDateTime getUpdatedTimeStamp() {
-    return updatedTimeStamp;
-  }
-
-  public RuleConfigurationEntity<T> setUpdatedTimeStamp(LocalDateTime updatedTimeStamp) {
-    this.updatedTimeStamp = updatedTimeStamp;
-    return this;
-  }
-
-  public boolean isActive() {
+  // Need to override the lombok generated setters and getters for isActive as it's a boolean.
+  public boolean getIsActive() {
     return isActive;
   }
 
-  public RuleConfigurationEntity<T> setIsActive(boolean active) {
-    isActive = active;
-    return this;
-  }
-
-  public T getRuleSpecificConfigurationData() {
-    return ruleSpecificConfigurationData;
-  }
-
-  public RuleConfigurationEntity<T> setRuleSpecificConfigurationData(
-      T ruleSpecificConfigurationData) {
-    this.ruleSpecificConfigurationData = ruleSpecificConfigurationData;
+  public RuleConfigurationEntity setIsActive(boolean isActive) {
+    this.isActive = isActive;
     return this;
   }
 }

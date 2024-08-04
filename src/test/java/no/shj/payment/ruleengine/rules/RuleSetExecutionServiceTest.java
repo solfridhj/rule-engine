@@ -2,14 +2,12 @@ package no.shj.payment.ruleengine.rules;
 
 import com.neovisionaries.i18n.CountryCode;
 import java.math.BigDecimal;
-import no.shj.payment.ruleengine.database.RuleConfigurationDaoImpl;
 import no.shj.payment.ruleengine.ruleservice.RuleSetExecutionService;
 import no.shj.payment.ruleengine.ruleservice.context.PaymentRuleContext;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
@@ -18,8 +16,9 @@ class RuleSetExecutionServiceTest {
 
   @Autowired private RuleSetExecutionService ruleSetExecutionService;
 
+  /*
   // Mocking away the Cosmos DB - could also use test containers but had some issues with the setup.
-  @MockBean private RuleConfigurationDaoImpl<?> ruleConfigurationDao;
+  @MockBean private RuleConfigurationDaoImpl<?> ruleConfigurationDao;*/
 
   @Test
   @Disabled

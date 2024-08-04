@@ -4,7 +4,13 @@ import com.neovisionaries.i18n.CountryCode;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
+@EqualsAndHashCode
+@ToString
+@Getter
 public class PaymentRuleContext {
 
   private String customerType;
@@ -17,38 +23,6 @@ public class PaymentRuleContext {
   // Output
   private final List<RuleExecutionInformation> ruleExecutionInformationList = new ArrayList<>();
   private final RuleExecutionResult ruleExecutionResult = new RuleExecutionResult();
-
-  public String getCustomerType() {
-    return customerType;
-  }
-
-  public BigDecimal getTransactionAmount() {
-    return transactionAmount;
-  }
-
-  public String getPaymentMethod() {
-    return paymentMethod;
-  }
-
-  public CountryCode getPaymentOriginCountry() {
-    return paymentOriginCountry;
-  }
-
-  public String getPaymentCurrency() {
-    return paymentCurrency;
-  }
-
-  public String getCardType() {
-    return cardType;
-  }
-
-  public List<RuleExecutionInformation> getRuleExecutionInformationList() {
-    return ruleExecutionInformationList;
-  }
-
-  public RuleExecutionResult getRuleExecutionResult() {
-    return ruleExecutionResult;
-  }
 
   public static final class PaymentRuleContextBuilder {
     private String customerType;
@@ -105,6 +79,4 @@ public class PaymentRuleContext {
       return paymentRuleContext;
     }
   }
-
-  // TODO - equals, hashmap. Lombok?
 }

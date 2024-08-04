@@ -1,21 +1,33 @@
 package no.shj.payment.ruleengine.ruleservice.genericengine;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import java.util.Optional;
 import no.shj.payment.ruleengine.database.RuleConfigurationDaoImpl;
 import no.shj.payment.ruleengine.ruleservice.context.PaymentRuleContext;
 import no.shj.payment.ruleengine.ruleservice.context.RuleExecutionInformation;
 import no.shj.payment.ruleengine.ruleservice.context.RuleExecutionResult;
-import no.shj.payment.ruleengine.ruleservice.exception.PaymentRuleEngineException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Abstract rule for which all rules <b>must</b> extend, in addition to the rule having the {@link
+ * RuleMetadata} annotation.
+ *
+ * @param <T> Type of the output of the result of the rule execution. Used to separate the execution
+ *     logic from update logic.
+ * @param <S> Type of the configuration data. Needs to be a class defined either as static in the
+ *     rule or elsewhere.
+ */
 public abstract class AbstractRule<T, S> {
 
-  private final RuleConfigurationDaoImpl<S> ruleConfigurationDao;
+  private final Class<S> type;
+  private final RuleConfigurationDaoImpl ruleConfigurationDao;
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
-  protected AbstractRule(RuleConfigurationDaoImpl<S> ruleConfigurationDao) {
+  protected AbstractRule(RuleConfigurationDaoImpl ruleConfigurationDao, Class<S> type) {
     this.ruleConfigurationDao = ruleConfigurationDao;
+    this.type = type;
   }
 
   private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -29,40 +41,46 @@ public abstract class AbstractRule<T, S> {
   public final void executeRule(PaymentRuleContext context) {
     var metadata = this.getClass().getAnnotation(RuleMetadata.class);
     var ruleId = metadata.ruleId();
+    var ruleVersion = metadata.version();
 
-    var ruleConfigurationOptional = ruleConfigurationDao.getRuleConfigurationEntity(ruleId);
+    var ruleConfigurationOptional =
+        ruleConfigurationDao.getRuleConfigurationEntity(ruleId, ruleVersion);
     if (ruleConfigurationOptional.isEmpty()) {
-      throw new PaymentRuleEngineException(
-          String.format("Rule id %s is missing configuration", ruleId));
+      // Rule does not have configuration - will be treated as if it's inactive.
+      log.warn(
+          "Not executing rule with id {} as the rule has no configuration for version {}.",
+          ruleId,
+          ruleVersion);
+      return;
     }
     var ruleConfiguration = ruleConfigurationOptional.get();
-    if (!ruleConfiguration.isActive()) {
-      log.info(String.format("Not executing rule with id %s as the rule is inactivated.", ruleId));
+    if (!ruleConfiguration.getIsActive()) {
+      log.trace("Not executing rule with id {} as the rule is inactivated.", ruleId);
       return;
     }
 
-    log.info(String.format("Executing rule with id %s", ruleId));
+    log.trace("Executing rule with id {}", ruleId);
 
     var ruleInputData = ruleInput(context);
 
-    log.debug(String.format("Rule id %s input: %s", ruleId, ruleInputData));
+    log.trace("Rule id {} input: {}", ruleId, ruleInputData);
 
-    log.debug(
-        String.format(
-            "Rule id %s has config: %s",
-            ruleId, ruleConfiguration.getRuleSpecificConfigurationData()));
-    var output = ruleLogic(context, ruleConfiguration.getRuleSpecificConfigurationData());
-    output.ifPresent(outputType -> setResult(context.getRuleExecutionResult(), outputType));
+    log.trace(
+        "Rule id {} has config: {}", ruleId, ruleConfiguration.getRuleSpecificConfigurationData());
+
+    S configOnObjectFormat =
+        objectMapper.convertValue(ruleConfiguration.getRuleSpecificConfigurationData(), type);
+    Optional<T> outputOptional = ruleLogic(context, configOnObjectFormat);
+    outputOptional.ifPresent(outputType -> setResult(context.getRuleExecutionResult(), outputType));
     var ruleExecutionMetadata =
         new RuleExecutionInformation()
             .setRuleInput(ruleInputData)
             .setRuleId(ruleId)
             .setRuleDescription(metadata.ruleDescription())
-            .setWasTriggered(output.isPresent());
-    if (ruleExecutionMetadata.wasTriggered()) {
-      log.debug(String.format("Rule id %s has result: %s", ruleId, output.get()));
-      log.info(String.format("Rule with id %s was triggered", ruleId));
-    }
+            .setWasTriggered(outputOptional.isPresent());
+
+    outputOptional.ifPresent(
+        t -> log.trace("Rule with id {} was triggered, with result: {}", ruleId, t));
     context.getRuleExecutionInformationList().add(ruleExecutionMetadata);
   }
 }

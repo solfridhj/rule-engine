@@ -54,7 +54,7 @@ public class ContextDtoMapper {
     return ExecutionInformationDto.ExecutionInformationBuilder.builder()
         .ruleId(String.valueOf(information.getRuleId()))
         .ruleDescription(information.getRuleDescription())
-        .wasTriggered(information.wasTriggered())
+        .wasTriggered(information.isWasTriggered())
         .ruleInput(information.getRuleInput())
         .build();
   }

@@ -50,13 +50,20 @@ mvn azure-functions:run
 `
  Will run the function on your localhost on port 7071.
 
+### Application tests
+Not emulating the Cosmos DB as I have a M3 Mac and it's not possible to use the Emulator to
+use a test container or docker image without a Windows VM...
+https://learn.microsoft.com/en-us/azure/cosmos-db/emulator?tabs=sql-api%2Cssl-netstd21#run-the-linux-emulator-on-macos 
+
+
+
 ## Infrastructure
 Created in Azure.
 
 1. Manual: Create a new subscription.
 2. Automated: Create the Azure Function in the consumption tier
 3. Manual: Create the Azure Cosmos DB in the free tier - could and should be automated.
-4. Manual: Configure network access so the function can access the cosmos DB. 
+4. Manual: Configure network access so the function can access the cosmos DB.
 Note: Due to the afunc being in the consumption plan, the entire datacenters outbound range has to be whitelisted (see more on this [here](https://learn.microsoft.com/en-gb/azure/azure-functions/ip-addresses?tabs=portal#find-outbound-ip-addresses))
 5. Automatic: Commits to main builds and deploys code to the Azure function (takes around 2 mins).
 

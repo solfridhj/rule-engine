@@ -15,4 +15,6 @@ public @interface RuleMetadata {
   Rule ruleId();
 
   String ruleDescription();
+
+  int version();
 }

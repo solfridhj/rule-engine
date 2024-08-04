@@ -3,3 +3,7 @@ spring:
     azure:
       cosmos:
         enabled: false
+
+logging:
+  level:
+    no.shj.payment.ruleengine: TRACE

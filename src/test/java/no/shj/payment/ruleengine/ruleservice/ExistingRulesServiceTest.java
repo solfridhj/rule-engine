@@ -15,6 +15,9 @@ class ExistingRulesServiceTest {
 
     assertThat(result)
         .hasSize(3)
-        .contains(PAYMENT_METHOD_FROM_COUNTRY, ACQUIRER_ROUTING, FEE_CALCULATION);
+        .contains(
+            new ExistingRulesService.RuleAndVersion(PAYMENT_METHOD_FROM_COUNTRY, 1),
+            new ExistingRulesService.RuleAndVersion(ACQUIRER_ROUTING, 1),
+            new ExistingRulesService.RuleAndVersion(FEE_CALCULATION, 1));
   }
 }
