@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public interface RuleConfigurationDao {
 
-  Optional<@NotNull @Valid RuleConfigurationEntity> getRuleConfigurationEntity(
+  Optional<@Valid RuleConfigurationEntity> getRuleConfigurationEntity(
       @NotNull Rule rule, @NotNull Integer ruleVersion);
 
   Optional<@Valid RuleConfigurationEntity> getRuleConfigurationEntityNotCached(

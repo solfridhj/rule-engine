@@ -2,6 +2,7 @@ package no.shj.payment.ruleengine.database;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.microsoft.azure.spring.data.cosmosdb.core.mapping.Document;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,7 +35,8 @@ public class RuleConfigurationEntity {
 
   // Rule specific configuration data
   @NotNull private Integer ruleSpecificConfigurationVersion;
-  @NotNull @Valid private Object ruleSpecificConfigurationData;
+  // Can be null if no config is set up yet.
+  @Nullable @Valid private Object ruleSpecificConfigurationData;
 
   // Need to override the lombok generated setters and getters for isActive as it's a boolean.
   public boolean getIsActive() {
