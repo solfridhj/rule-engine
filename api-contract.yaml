@@ -1,0 +1,169 @@
+openapi: 3.0.3
+info:
+  title: Payment Rules API
+  description: API for Payment Rules
+  contact:
+    email: solfrid.hagen.johansen@outlook.com
+  version: 1.0.0
+externalDocs:
+  description: GitHub Repository
+  url: https://github.com/solfridhj/rule-engine
+
+servers:
+  - url: https://payment-rules-fapp-preprod.azurewebsites.net/api/payments
+tags:
+  - name: Rules
+    description: Execute rules-engine and get all rules
+  - name: Configurations
+    description: Administer the rule configurations at any time
+paths:
+  /rules:
+    post:
+      summary: Execute rule-engine
+      operationId: executeRuleEngine
+      description: Execute rule-engine. Returns a list with evaluation result and info about the executed rules.
+      tags:
+        - Rules
+      responses:
+        '200':
+          description: ''
+      requestBody:
+        $ref: '#/components/requestBodies/evaluate_payment'
+    get:
+      summary: Get rules and configurations
+      operationId: getRulesAndConfigurations
+      description: Get rules and configurations
+      tags:
+        - Rules
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentConfigurationResponse'
+
+  /configurations:
+    post:
+      summary: Update rule config
+      operationId: updateRuleConfig
+      description: Update rule config
+      tags:
+        - Configurations
+      responses:
+        '201':
+          description: 'Updated rule config'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/update_rule_config'
+
+      requestBody:
+        $ref: '#/components/requestBodies/update_rule_config'
+    get:
+      summary: Get schema for all rules
+      operationId: getSchemaForAllRules
+      description: Get schema for all rules
+      tags:
+        - Configurations
+      responses:
+        '200':
+          description: 'Response with a list of schemas for all rules'
+
+components:
+  schemas:
+    evaluate_payment:
+      type: object
+      properties:
+        customerType:
+          type: string
+          example: "EMPLOYEE"
+        transactionAmount:
+          type: number
+          example: "3432.34"
+        paymentMethod:
+          type: string
+          example: "MASTERCARD"
+        paymentOriginCountry:
+          type: string
+          example: "NO"
+        paymentCurrency:
+          type: string
+          example: "SEK"
+        cardType:
+          type: string
+          example: "CREDIT"
+    PaymentConfigurationResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        ruleId:
+          type: string
+        createdDate:
+          type: string
+          format: date
+        createdBy:
+          type: string
+          format: email
+        isActive:
+          type: boolean
+        ruleSpecificConfigurationDate:
+          $ref: '#/components/schemas/RuleSpecificConfigurationData'
+
+    RuleSpecificConfigurationData:
+      type: object
+      description: 'Object which needs to be on the format for the rule specified in rule id. The schema that is required here can be found from the GET /configurations endpoint. The example is just to showcase for one specific rule.'
+      example:
+        currencyMappings:
+          - paymentCurrency: "SEK"
+            paymentMethodMappings:
+              - paymentMethod: "MASTERCARD"
+                acquirerRoutingMappings:
+                  - acquirerName: "Acquirer A"
+                    percentageRoutedTo: 25
+                  - acquirerName: "Acquirer B"
+                    percentageRoutedTo: 45
+                  - acquirerName: "Acquirer C"
+                    percentageRoutedTo: 30
+              - paymentMethod: "VISA"
+                acquirerRoutingMappings:
+                  - acquirerName: "Acquirer A"
+                    percentageRoutedTo: 20
+                  - acquirerName: "Acquirer B"
+                    percentageRoutedTo: 50
+                  - acquirerName: "Acquirer C"
+                    percentageRoutedTo: 30
+
+    update_rule_config:
+      type: object
+      required:
+        - ruleId
+        - isActive
+        - ruleSpecificConfigurationData
+      properties:
+        ruleId:
+          type: string
+          example: 'ACQUIRER_ROUTING'
+        isActive:
+          type: boolean
+        ruleSpecificConfigurationDate:
+          $ref: '#/components/schemas/RuleSpecificConfigurationData'
+
+
+  requestBodies:
+    evaluate_payment:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/evaluate_payment'
+      description: ''
+      required: true
+    update_rule_config:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/update_rule_config'
+      description: ''
+      required: true
