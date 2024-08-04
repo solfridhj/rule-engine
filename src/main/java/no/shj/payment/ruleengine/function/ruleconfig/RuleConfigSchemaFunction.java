@@ -1,6 +1,8 @@
 package no.shj.payment.ruleengine.function.ruleconfig;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.victools.jsonschema.generator.*;
 import com.github.victools.jsonschema.module.jakarta.validation.JakartaValidationModule;
 import com.github.victools.jsonschema.module.jakarta.validation.JakartaValidationOption;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RuleConfigSchemaFunction implements Function<Void, List<String>> {
+
+  private ObjectMapper objectMapper = new ObjectMapper();
 
   @Override
   public List<String> apply(Void notUsed) {
@@ -37,7 +41,12 @@ public class RuleConfigSchemaFunction implements Function<Void, List<String>> {
       SchemaGeneratorConfig config = configBuilder.build();
       SchemaGenerator generator = new SchemaGenerator(config);
       JsonNode jsonSchema = generator.generateSchema(configType);
-      printedRules.add(jsonSchema.toPrettyString());
+      try {
+        var asString = objectMapper.writeValueAsString(jsonSchema);
+        printedRules.add(asString);
+      } catch (JsonProcessingException e) {
+        throw new RuntimeException(e);
+      }
     }
     return printedRules;
   }
