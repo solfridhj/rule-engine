@@ -1,9 +1,8 @@
 package no.shj.payment.ruleengine.function.ruleconfig.updaterule;
 
+import java.time.format.DateTimeFormatter;
 import no.shj.payment.ruleengine.database.RuleConfigurationEntity;
 import org.springframework.stereotype.Component;
-
-import java.time.format.DateTimeFormatter;
 
 @Component
 public class UpdateRuleMapper {
@@ -19,8 +18,8 @@ public class UpdateRuleMapper {
     return new UpdateRuleConfigurationResponseDto()
         .setRuleId(entity.getRuleId())
         .setIsActive(entity.getIsActive())
-            .setCreatedBy(entity.getCreatedBy())
-            .setCreatedDate(entity.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-            .setRuleSpecificConfigurationData(entity.getRuleSpecificConfigurationData());
+        .setCreatedBy(entity.getCreatedBy())
+        .setCreatedDate(entity.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+        .setRuleSpecificConfigurationData(entity.getRuleSpecificConfigurationData());
   }
 }

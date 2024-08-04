@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDate;
-
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
@@ -14,12 +12,12 @@ public class ExistingRulesResponseDto {
 
   private String id;
   @NotBlank private String ruleId;
-    private String createdDate;
-   private String createdBy;
-   private Boolean isActive;
-   private String structureVersion;
-   private String ruleSpecificConfigurationVersion;
-   private Object ruleSpecificConfigurationData;
+  private String createdDate;
+  private String createdBy;
+  private Boolean isActive;
+  private String structureVersion;
+  private String ruleSpecificConfigurationVersion;
+  private Object ruleSpecificConfigurationData;
 
   // Not use lombok for these
   public Boolean getIsActive() {

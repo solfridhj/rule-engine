@@ -18,8 +18,9 @@ public class RuleConfigMapper {
         .setId(ruleConfiguration.getId())
         .setRuleId(ruleConfiguration.getRuleId().toString())
         .setIsActive(ruleConfiguration.getIsActive())
-            .setCreatedBy(ruleConfiguration.getCreatedBy())
-            .setCreatedDate(ruleConfiguration.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+        .setCreatedBy(ruleConfiguration.getCreatedBy())
+        .setCreatedDate(
+            ruleConfiguration.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
         .setRuleSpecificConfigurationData(ruleConfiguration.getRuleSpecificConfigurationData());
   }
 }

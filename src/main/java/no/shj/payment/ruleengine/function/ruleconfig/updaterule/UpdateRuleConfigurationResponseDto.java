@@ -1,13 +1,10 @@
 package no.shj.payment.ruleengine.function.ruleconfig.updaterule;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import no.shj.payment.ruleengine.ruleservice.rules.Rule;
-
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +18,6 @@ public class UpdateRuleConfigurationResponseDto {
   @NotNull private String createdBy;
   // Rule specific configuration data
   @NotNull private Object ruleSpecificConfigurationData;
-
 
   // Have to define these and not use lombok
   public @NotNull Boolean getIsActive() {

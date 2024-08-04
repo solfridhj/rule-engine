@@ -9,7 +9,6 @@ import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,10 +35,11 @@ public class EngineRuleHandler {
   private final UpdateRuleExecutionFunction updateRuleExecutionFunction;
   private final RuleConfigSchemaFunction ruleConfigSchemaFunction;
 
-  public EngineRuleHandler(RuleExecutionFunction executionFunction,
-                           RuleConfigExecutionFunction ruleConfigExecutionFunction,
-                           UpdateRuleExecutionFunction updateRuleExecutionFunction,
-                           RuleConfigSchemaFunction ruleConfigSchemaFunction) {
+  public EngineRuleHandler(
+      RuleExecutionFunction executionFunction,
+      RuleConfigExecutionFunction ruleConfigExecutionFunction,
+      UpdateRuleExecutionFunction updateRuleExecutionFunction,
+      RuleConfigSchemaFunction ruleConfigSchemaFunction) {
     this.executionFunction = executionFunction;
     this.ruleConfigExecutionFunction = ruleConfigExecutionFunction;
     this.updateRuleExecutionFunction = updateRuleExecutionFunction;
@@ -95,18 +95,18 @@ public class EngineRuleHandler {
 
   @FunctionName("payments-configuration-schema")
   public HttpResponseMessage getRuleConfigSchema(
-          @HttpTrigger(
-                  name = "request",
-                  methods = {HttpMethod.GET},
-                  authLevel = AuthorizationLevel.ANONYMOUS)
+      @HttpTrigger(
+              name = "request",
+              methods = {HttpMethod.GET},
+              authLevel = AuthorizationLevel.ANONYMOUS)
           HttpRequestMessage<Optional<String>> request,
-          ExecutionContext context) {
+      ExecutionContext context) {
     var result = ruleConfigSchemaFunction.apply(null);
     return request
-            .createResponseBuilder(HttpStatus.OK)
-            .body(result)
-            .header("Content-Type", "application/json")
-            .build();
+        .createResponseBuilder(HttpStatus.OK)
+        .body(result)
+        .header("Content-Type", "application/json")
+        .build();
   }
 
   @FunctionName("payments-configuration-update")
@@ -127,9 +127,8 @@ public class EngineRuleHandler {
       var result = updateRuleExecutionFunction.apply(configObject);
 
       return request
-          .createResponseBuilder(
-              HttpStatus.CREATED)
-              .body(result)
+          .createResponseBuilder(HttpStatus.CREATED)
+          .body(result)
           .header("Content-Type", "application/json")
           .build();
 
@@ -149,13 +148,13 @@ public class EngineRuleHandler {
           .build();
     } catch (Exception e) {
       var problemDetail =
-              ProblemDetail.forStatus(org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR);
+          ProblemDetail.forStatus(org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR);
       problemDetail.setDetail(e.getMessage());
       return request
-              .createResponseBuilder(HttpStatus.INTERNAL_SERVER_ERROR)
-              .body(problemDetail)
-              .header("Content-Type", "application/problem+json")
-              .build();
+          .createResponseBuilder(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body(problemDetail)
+          .header("Content-Type", "application/problem+json")
+          .build();
     }
   }
 

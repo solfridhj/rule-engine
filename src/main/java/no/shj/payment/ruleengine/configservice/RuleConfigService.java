@@ -17,8 +17,6 @@ import no.shj.payment.ruleengine.ruleservice.ExistingRulesService;
 import no.shj.payment.ruleengine.ruleservice.genericengine.RuleMetadata;
 import no.shj.payment.ruleengine.ruleservice.rules.Rule;
 import org.reflections.Reflections;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.stereotype.Service;
