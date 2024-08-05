@@ -1,5 +1,6 @@
 package no.shj.payment.ruleengine.function.ruleconfig;
 
+import static no.shj.payment.ruleengine.ruleservice.rules.Rule.ACQUIRER_ROUTING;
 import static no.shj.payment.ruleengine.testconfig.ReflectionsTestsConfig.createTestReflections;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,7 +16,7 @@ class RuleConfigSchemaFunctionTest {
   void getSchemaForAllRules() {
     var outputList = function.apply(null);
     assertThat(outputList).hasSize(2);
-    // assertThat(outputList.getFirst().getJsonNode()).contains("mockObject");
-    // assertThat(outputList.getFirst().getRuleId()).isEqualTo(ACQUIRER_ROUTING);
+    assertThat(outputList.getFirst().getJsonNode().toPrettyString()).contains("mockObject");
+    assertThat(outputList.getFirst().getRuleId()).isEqualTo(ACQUIRER_ROUTING);
   }
 }
