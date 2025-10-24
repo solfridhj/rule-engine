@@ -1,4 +1,18 @@
-# Payment rules Azure Function application
+# Payment Rules Engine
+
+> A configurable rules engine for payment processing, built to explore
+> cloud-native patterns with Azure Functions and dynamic rule configuration.
+
+## Project Status
+
+This was a weekend exploration project demonstrating production-ready architecture
+patterns. The live deployment has been deleted to avoid ongoing costs.
+
+**Key concepts demonstrated:**
+- Generic, extensible rule engine using reflection
+- Dynamic configuration schema generation
+- Full CI/CD with Infrastructure as Code
+- Cloud-native serverless architecture
 
 ## Implemented Functions
 The application with its HTTP API is deployed to https://payment-rules-fapp-preprod.azurewebsites.net/api. No API key or any other form of auth
@@ -39,7 +53,7 @@ is all done by using reflection to identify all the AbstractRule extending class
 mapping the config data to the correct structure (based on the config structure as it is defined in the rule), handling missing config, inactive rules,
 and setting data about the rule execution. 
 
-With the setup, if no new input and/or output data is required (which is likely will be required... Some improvements could be done here) the only change needed to 
+With the setup, if no new input and/or output data is required (which is likely will be required. Some improvements could be done here) the only change needed to 
 1. Create a new rule.
 2. Return the info about the new rule in the API
 3. Return info about config schema
@@ -79,7 +93,7 @@ so creating integration tests in the code is not easily possible for me.
 The Azure function in the Consumption plan has cold-starts, not ideal, so for prod use here I would go for at least
 the Premium plan as that does not have cold-starts and allows VNet integration. So both improves the initial response time
 and improves security (probably needed considering this is payment data, could contain sensitive information).
-I estimated (can give more specifics on where this is from) around 5 requests per. second,
+I estimated around 5 requests per. second,
 and the system as it is now should be able to handle that. The function is on auto-scale, so if more instances are needed it will scale up.
 I deployed this to Norway east, and depending on if all servers calling this method is from physically around here it may be sufficient
 with only one region (in prod at least one DR region would likely be required).

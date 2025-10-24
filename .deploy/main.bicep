@@ -3,7 +3,7 @@ targetScope = 'subscription'
 // TODO - could send in as parameters and allow deploying to different envs easily
 var location  = 'norwayeast'
 var env  = 'preprod'
-var owner  = 'solfrid.hagen.johansen@outlook.com'
+var owner  = 'shj@outlook.com'
 
 var resourceGroupName  = 'payment-engine-rg-${env}'
 
